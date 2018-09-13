@@ -1,0 +1,30 @@
+{
+  "name": "ow_coaching_app",
+  "private": true,
+  "scripts": {
+    "test": "jest --config=jest.config.json"
+  },
+  "jest": {
+    "roots": [
+      "test/javascript/tests"
+    ]
+  },
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "3.0.0",
+    "enzyme-adapter-react-16": "1.0.0",
+    "enzyme-to-json": "3.0.1",
+    "prop-types": "^15.6.2",
+    "raf": "3.3.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-test-renderer": "16.0.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^23.6.0",
+    "webpack-dev-server": "2.11.2"
+  }
+}
