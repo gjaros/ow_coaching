@@ -10,7 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_131440) do
+ActiveRecord::Schema.define(version: 2018_09_14_193126) do
+
+  create_table "coaches", force: :cascade do |t|
+    t.integer "profile_id"
+    t.integer "reputation"
+    t.string "roles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_coaches_on_profile_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "student_id"
+    t.boolean "reviewed"
+    t.string "title"
+    t.string "link"
+    t.integer "coachability"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_posts_on_student_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "platform"
+    t.integer "region"
+    t.string "tag"
+    t.integer "sr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "coach_id"
+    t.integer "post_id"
+    t.text "summary"
+    t.integer "rating"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coach_id"], name: "index_reviews_on_coach_id"
+    t.index ["post_id"], name: "index_reviews_on_post_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.integer "profile_id"
+    t.integer "reputation"
+    t.string "roles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_students_on_profile_id"
+  end
+
+  create_table "tips", force: :cascade do |t|
+    t.integer "review_id"
+    t.integer "timestamp"
+    t.text "comment"
+    t.integer "helpfulness"
+    t.string "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_tips_on_review_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Profile:
+  = @student.profile
+%p
+  %b Reputation:
+  = @student.reputation
+%p
+  %b Roles:
+  = @student.roles
+
+= link_to 'Edit', edit_student_path(@student)
+\|
+= link_to 'Back', students_path

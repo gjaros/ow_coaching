@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Platform:
+  = @profile.platform
+%p
+  %b Region:
+  = @profile.region
+%p
+  %b Tag:
+  = @profile.tag
+%p
+  %b Sr:
+  = @profile.sr
+
+= link_to 'Edit', edit_profile_path(@profile)
+\|
+= link_to 'Back', profiles_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Reputation:
+  = @coach.reputation
+%p
+  %b Roles:
+  = @coach.roles
+
+= link_to 'Edit', edit_coach_path(@coach)
+\|
+= link_to 'Back', coaches_path

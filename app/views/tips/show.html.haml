@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Review:
+  = @tip.review
+%p
+  %b Timestamp:
+  = @tip.timestamp
+%p
+  %b Comment:
+  = @tip.comment
+%p
+  %b Helpfulness:
+  = @tip.helpfulness
+%p
+  %b Tag:
+  = @tip.tag
+
+= link_to 'Edit', edit_tip_path(@tip)
+\|
+= link_to 'Back', tips_path
