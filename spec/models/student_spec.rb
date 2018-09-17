@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Student, type: :model do
   context 'validation tests' do
+    let(:student) { build(:student) }
     it 'ensures roles presence' do
-      student = Student.new(profile_id: 1).save
-      expect(student).to eq(false)
+      student.roles = nil
+      expect(student.save).to eq(false)
     end
 
     it 'should save successfully' do
-      student = Student.new(profile_id: 1, roles: ['tank']).save
-      expect(student).to eq(true)
+      expect(student.save).to eq(true)
     end
   end
 end

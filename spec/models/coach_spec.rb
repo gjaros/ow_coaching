@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Coach, type: :model do
   context 'validation tests' do
+    let(:coach) { build(:coach) }
     it 'ensures roles presence' do
-      coach = Coach.new(profile_id: 1).save
-      expect(coach).to eq(false)
+      coach.roles = nil
+      expect(coach.save).to eq(false)
     end
 
     it 'should save successfully' do
-      coach = Coach.new(profile_id: 1, roles: ['tank']).save
-      expect(coach).to eq(true)
+      expect(coach.save).to eq(true)
     end
   end
 end

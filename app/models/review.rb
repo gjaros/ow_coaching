@@ -3,6 +3,6 @@ class Review < ApplicationRecord
   belongs_to :post
   has_many :tips
 
-  # validates :title, presence: true
-  # validates :summary, presence: true
+  validates :title, presence: true
+  validates :summary, presence: true
 end
