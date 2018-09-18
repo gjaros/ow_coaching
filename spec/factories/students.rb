@@ -7,7 +7,7 @@ FactoryBot.define do
 
   factory :random_student, class: Student do
     profile
-    reputation { rand(0..100) }
-    roles { [['tank', 'support', 'damage'].sample] }
+    reputation { rand(-100..100) }
+    roles { [['tank', 'support', 'damage'].sample(rand(1..3))] }
   end
 end

@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[5.2]
       t.references :coach, foreign_key: true
       t.references :post, foreign_key: true
       t.text :summary
-      t.integer :rating
+      t.integer :rating, default: 0
       t.string :title
 
       t.timestamps

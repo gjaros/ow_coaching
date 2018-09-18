@@ -3,12 +3,12 @@ FactoryBot.define do
     user
     platform { 0 }
     region { 0 }
-    tag { 'tag' }
+    sequence(:tag) { |n| "tag#{n}" }
     sr { 1 }
   end
 
-  factory :random_profile, class: User do
-    user
+  factory :random_profile, class: Profile do
+    association :user, factory: :random_user
     platform { rand(0..2) }
     region { rand(0..1) }
     tag { Faker::Esport.player }

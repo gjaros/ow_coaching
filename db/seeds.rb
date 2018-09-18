@@ -1,13 +1,15 @@
 require 'faker'
 
-case Rails.env
-when 'test'
-   User.create!(email: 'sample@example.com', password: 'password', password: 'password')
-   Profile.create!(user_id: 1, platform: 0, region: 0, tag: 'tag', sr: 0)
-   Coach.create!(profile_id: 1, reputation: 0, roles: ['tank'])
-   Student.create!(profile_id: 1, reputation: 0, roles: ['tank'])
-   Post.create!(student_id: 1, reviewed: false, title: 'title', link: 'https://www.youtube.com/watch?v=dlVTv8O151M', coachability: 0)
-   Review.create!(cocah_id: 1, post_id: 1, summary: 'summary', rating: 0, title: 'title')
-   Tip.create!(review_id: 1, timestamp: 0, comment: 'comment', helpfulness: 0, tag: ['positioning'])
-when 'development'
-end
+user = User.create!(email: Faker::Internet.free_email, password: 'password', password_confirmation: 'password')
+profile = Profile.create!(user_id: user.id, platform: rand(0..2), region: rand(0..1), tag: Faker::Esport.player, sr: rand(1..5000))
+coach = Coach.create!(profile_id: profile.id, reputation: rand(-100..100), roles: [['tank', 'support', 'damage'].sample(rand(1..3))])
+student = Student.create!(profile_id: profile.id, reputation: rand(-100..100), roles: [['tank', 'support', 'damage'].sample(rand(1..3))])
+post =  Post.create!(student_id: student.id, reviewed: Faker::Boolean.boolean, title: Faker::Lorem.sentence, link: Faker::Internet.url('https://www.youtube.com'), coachability: rand(-100..100))
+review = Review.create!(coach_id: coach.id, post_id: post.id, summary: Faker::Lorem.paragraph_by_chars(rand(175..300), false), rating: rand(-100..100), title: Faker::Lorem.sentence)
+
+
+# case Rails.env
+#   when 'test'
+#
+#   when 'development'
+# end

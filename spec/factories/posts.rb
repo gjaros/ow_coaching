@@ -12,6 +12,6 @@ FactoryBot.define do
     reviewed { Faker::Boolean.boolean }
     title { Faker::Lorem.sentence }
     link { Faker::Internet.url('https://www.youtube.com') }
-    coachability { rand(0..100) }
+    coachability { rand(-100..100) }
   end
 end

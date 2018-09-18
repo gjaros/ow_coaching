@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  # most validation done by Devise
   context 'validations tests' do
     let(:user) { build(:user) }
     it 'ensures presence of email' do

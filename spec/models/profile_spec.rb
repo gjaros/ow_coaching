@@ -3,11 +3,6 @@ require 'rails_helper'
 RSpec.describe Profile, type: :model do
   context 'validation tests' do
     let(:profile) { build(:profile) }
-    it 'ensures profile_id presence' do
-      profile.user_id = nil
-      expect(profile.save).to eq(false)
-    end
-
     it 'ensures platform presence' do
       profile.platform = nil
       expect(profile.save).to eq(false)
@@ -21,6 +16,12 @@ RSpec.describe Profile, type: :model do
     it 'ensures tag presence' do
       profile.tag = nil
       expect(profile.save).to eq(false)
+    end
+
+    it 'ensures tag uniqueness' do
+      profile1 = create(:random_profile, tag: 'tag')
+      profile2 = build(:random_profile, tag: 'tag')
+      expect(profile2).to_not be_valid
     end
 
     it 'ensures sr presence' do

@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
 
   create_table "coaches", force: :cascade do |t|
     t.integer "profile_id"
-    t.integer "reputation"
+    t.integer "reputation", default: 0
     t.string "roles"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "student_id"
-    t.boolean "reviewed"
+    t.boolean "reviewed", default: false
     t.string "title"
     t.string "link"
-    t.integer "coachability"
+    t.integer "coachability", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_posts_on_student_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
     t.integer "coach_id"
     t.integer "post_id"
     t.text "summary"
-    t.integer "rating"
+    t.integer "rating", default: 0
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
 
   create_table "students", force: :cascade do |t|
     t.integer "profile_id"
-    t.integer "reputation"
+    t.integer "reputation", default: 0
     t.string "roles"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
     t.integer "review_id"
     t.integer "timestamp"
     t.text "comment"
-    t.integer "helpfulness"
-    t.string "tag"
+    t.integer "helpfulness", default: 0
+    t.string "tags"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_tips_on_review_id"
