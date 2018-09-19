@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    student
+    profile
     reviewed { false }
     title { 'title' }
     link { 'https://www.youtube.com/watch?v=x2qapy3s6Tg' }
@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :random_post, class: Post do
-    student
+    association :profile, factory: :random_profile
     reviewed { Faker::Boolean.boolean }
     title { Faker::Lorem.sentence }
     link { Faker::Internet.url('https://www.youtube.com') }

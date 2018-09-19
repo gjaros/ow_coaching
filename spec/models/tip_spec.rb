@@ -31,7 +31,7 @@ RSpec.describe Tip, type: :model do
   context 'before_validation tests' do
     let(:tip) { build(:tip) }
     it 'ensures tags number limit <= 10' do
-      tip.tags = Faker::Lorem.words(50).delete_if { |tag| tag.length < 3 || tag.length > 15 }
+      tip.tags = Faker::Lorem.words(50)
       expect(tip).to be_valid
     end
 

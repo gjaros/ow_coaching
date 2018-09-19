@@ -13,7 +13,7 @@ FactoryBot.define do
     association :user, factory: :random_user
     platform { rand(0..2) }
     region { rand(0..1) }
-    tag { Faker::Esport.player }
+    tag { Faker::Name.first_name }
     sr { rand(1..5000) }
     reputation { rand(-100..100) }
     roles { ['tank', 'support', 'damage'].sample(rand(1..3)) }

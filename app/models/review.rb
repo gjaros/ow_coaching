@@ -1,13 +1,5 @@
-class SRDifferenceValidator < ActiveModel::Validator
-  def validate(record)
-    if Profile.find(record.coach_id).sr < Profile.find(Post.find(record.post_id).student_id).sr
-      record.errors[:base]
-    end
-  end
-end
-
 class Review < ApplicationRecord
-  belongs_to :coach
+  belongs_to :profile
   belongs_to :post
   has_many :tips
 

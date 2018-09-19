@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  belongs_to :student
+  belongs_to :profile
   has_many :reviews
 
   validates :title, presence: true, length: { minimum: 3, maximum: 50 }

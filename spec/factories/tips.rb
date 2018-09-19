@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :random_tip, class: Tip do
-    review
+    association :review, factory: :random_review
     timestamp { rand(0..1800) }
     comment { Faker::Lorem.paragraph_by_chars(rand(75..300), false) }
     helpfulness { rand(-100..100) }
