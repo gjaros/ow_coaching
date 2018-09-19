@@ -6,6 +6,8 @@ class CreateProfiles < ActiveRecord::Migration[5.2]
       t.integer :region
       t.string :tag
       t.integer :sr
+      t.integer :reputation, default: 0
+      t.string :roles
 
       t.timestamps
     end

@@ -37,4 +37,11 @@ RSpec.describe Review, type: :model do
       expect(review.save).to eq(true)
     end
   end
+
+  # context 'restriction tests' do
+  #   let(:random_user) {  }
+  #   it 'makes sure review can\'t be submitted by coach to student who\'s sr is higher' do
+  #
+  #   end
+  # end
 end

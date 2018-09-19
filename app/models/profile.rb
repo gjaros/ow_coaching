@@ -3,6 +3,9 @@ class Profile < ApplicationRecord
   validates :region, presence: true
   validates :tag, presence: true, uniqueness: true
   validates :sr, presence:true
+  validates :roles, presence: true
+
+  serialize :roles, Array
 
   belongs_to :user
 

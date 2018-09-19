@@ -5,6 +5,8 @@ FactoryBot.define do
     region { 0 }
     sequence(:tag) { |n| "tag#{n}" }
     sr { 1 }
+    reputation { 0 }
+    roles { ['tank'] }
   end
 
   factory :random_profile, class: Profile do
@@ -13,5 +15,7 @@ FactoryBot.define do
     region { rand(0..1) }
     tag { Faker::Esport.player }
     sr { rand(1..5000) }
+    reputation { rand(-100..100) }
+    roles { ['tank', 'support', 'damage'].sample(rand(1..3)) }
   end
 end

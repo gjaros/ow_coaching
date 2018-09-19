@@ -29,6 +29,11 @@ RSpec.describe Profile, type: :model do
       expect(profile.save).to eq(false)
     end
 
+    it 'ensures role presence' do
+      profile.roles = nil
+      expect(profile.save).to eq(false)
+    end
+
     it 'should save successfully' do
       expect(profile.save).to eq(true)
     end

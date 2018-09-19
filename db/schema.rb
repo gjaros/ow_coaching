@@ -12,24 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2018_09_14_193126) do
 
-  create_table "coaches", force: :cascade do |t|
-    t.integer "profile_id"
-    t.integer "reputation", default: 0
-    t.string "roles"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_coaches_on_profile_id"
-  end
-
   create_table "posts", force: :cascade do |t|
-    t.integer "student_id"
+    t.integer "profile_id"
     t.boolean "reviewed", default: false
     t.string "title"
     t.string "link"
     t.integer "coachability", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["student_id"], name: "index_posts_on_student_id"
+    t.index ["profile_id"], name: "index_posts_on_profile_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -38,30 +29,23 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
     t.integer "region"
     t.string "tag"
     t.integer "sr"
+    t.integer "reputation", default: 0
+    t.string "roles"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.integer "coach_id"
+    t.integer "profile_id"
     t.integer "post_id"
     t.text "summary"
     t.integer "rating", default: 0
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["coach_id"], name: "index_reviews_on_coach_id"
     t.index ["post_id"], name: "index_reviews_on_post_id"
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.integer "profile_id"
-    t.integer "reputation", default: 0
-    t.string "roles"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_students_on_profile_id"
+    t.index ["profile_id"], name: "index_reviews_on_profile_id"
   end
 
   create_table "tips", force: :cascade do |t|
