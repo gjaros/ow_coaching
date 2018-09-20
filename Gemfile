@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'material_design_lite-rails'
-gem 'material_icons'
+gem 'font-awesome-rails'
+gem 'bootstrap', '~> 4.1.3'
+gem 'jquery-rails'
 gem 'devise'
 gem 'haml-rails'
 gem 'normalize-rails'

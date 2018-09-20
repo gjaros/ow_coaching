@@ -69,6 +69,6 @@ class TipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tip_params
-      params.require(:tip).permit(:review_id, :timestamp, :comment, :helpfulness, :tag)
+      params.require(:tip).permit(:review_id, :timestamp, :comment, :helpfulness, :tags)
     end
 end

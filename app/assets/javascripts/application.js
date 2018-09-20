@@ -14,3 +14,29 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
+
+$(document).ready(function(){
+  $('.fade-tooltip').click(function(){
+      var that = $(this)
+      that.tooltip('show');
+      setTimeout(function(){
+          that.tooltip('hide');
+      }, 2000);
+  });
+
+  $('[data-toggle="popover"]').popover()
+
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  });
+
+  //OnClick, collapses notes list, changes chevron direction.
+  $('.list-group-item').on('click', function() {
+    $('.fa.fa', this)
+      .toggleClass('fa-chevron-right')
+      .toggleClass('fa-chevron-down');
+  });
+});

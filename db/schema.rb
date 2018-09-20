@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "profile_id"
-    t.boolean "reviewed", default: false
     t.string "title"
     t.string "link"
     t.integer "coachability", default: 0

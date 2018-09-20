@@ -15,5 +15,11 @@
  *= require_self
  */
 
-@import 'material';
+@import 'bootstrap';
+@import 'font-awesome';
 @import 'base/colors';
+@import 'home';
+
+body {
+  padding-top: 65px;
+}

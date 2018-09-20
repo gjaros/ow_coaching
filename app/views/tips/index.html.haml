@@ -19,7 +19,7 @@
         %td= tip.timestamp
         %td= tip.comment
         %td= tip.helpfulness
-        %td= tip.tag
+        %td= tip.tags
         %td= link_to 'Show', tip
         %td= link_to 'Edit', edit_tip_path(tip)
         %td= link_to 'Destroy', tip, method: :delete, data: { confirm: 'Are you sure?' }
