@@ -4,7 +4,7 @@ class CreateTips < ActiveRecord::Migration[5.2]
       t.references :review, foreign_key: true
       t.integer :timestamp
       t.text :comment
-      t.integer :helpfulness, default: 0
+      t.string :helpfulness, default: '[0, 0]'
       t.string :tags
 
       t.timestamps

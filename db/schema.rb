@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
     t.integer "profile_id"
     t.string "title"
     t.string "link"
-    t.integer "coachability", default: 0
+    t.string "coachability", default: "[0, 0]"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_posts_on_profile_id"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_193126) do
     t.integer "review_id"
     t.integer "timestamp"
     t.text "comment"
-    t.integer "helpfulness", default: 0
+    t.string "helpfulness", default: "[0, 0]"
     t.string "tags"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

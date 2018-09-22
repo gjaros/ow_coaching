@@ -4,7 +4,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.references :profile, foreign_key: true
       t.string :title
       t.string :link
-      t.integer :coachability, default: 0
+      t.string :coachability, default: '[0, 0]'
 
       t.timestamps
     end

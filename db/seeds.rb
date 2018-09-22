@@ -1,7 +1,10 @@
 require 'faker'
-
+#84 OWL pro player tags.
+owl_tags = [
+  'Agilities', 'AimGod', 'aKm', 'Anamo', 'Architect', 'Arhan', 'Ark', 'aWesomeGuy', 'BABYBAY', 'Bani', 'Bdosin', 'BigGoose', 'birdring', 'Bischu', 'Boink', 'Boombox', 'Bunny', 'Carpe', 'Choilhyobin', 'Closer', 'Coolmatt', 'Custa', 'Diya', 'EFFECT', 'Eqo', 'Fate', 'Fearless', 'Fissure', 'FLETA', 'fragi', 'Fury', 'Gamsu', 'Geguri', 'Gesture', 'HarryHook', 'Hotba', 'Hydration', 'Izayaki', 'Jake', 'Jjonak', 'Kariv', 'Kellex', 'KSF', 'KuKi', 'Libero', 'LiNkzr', 'Mano', 'Meko', 'Mickie', 'Moth', 'Muma', 'Munchkin', 'Neko', 'Neptuno', 'Nevix', 'NotE', 'NUS', 'OGE', 'Pine', 'Poko', 'Profit', 'Rawkus', 'ryujehong', 'SADO', 'Saebyeolbe', 'Sayaplayer', 'Shaz', 'sinatraa', 'sleepy', 'Smurf', 'Snillo', 'Soon', 'Space', 'SPREE', 'STRIKER', 'super', 'Surefour', 'Taimou', 'tobi', 'TviQ', 'Unkoe', 'Void', 'XepheR', 'ZUNBA'
+]
 # create users and a profile for each user
-20.times do
+10.times do |i|
   user = User.create!(
     email: Faker::Internet.free_email,
     password: 'password',
@@ -11,10 +14,10 @@ require 'faker'
     user_id: user.id,
     platform: rand(0..2),
     region: rand(0..1),
-    tag: Faker::Name.first_name + Faker::Name.last_name,
+    tag: owl_tags[i],
     sr: rand(1..5000),
     reputation: rand(-100..100),
-    roles: [['tank', 'support', 'damage'].sample(rand(1..3))]
+    roles: ['tank', 'support', 'damage'].sample(rand(1..3))
   )
   # each profile creates 0 to 3 posts
   rand(0..3).times do
@@ -22,7 +25,7 @@ require 'faker'
       profile_id: profile.id,
       title: Faker::Lorem.sentence,
       link: ['https://www.twitch.tv/videos/311071286', 'https://www.youtube.com/watch?v=KBoHml4cRCQ'].sample,
-      coachability: rand(-100..100)
+      coachability: [rand(1..100), rand(1..100)]
     )
   end
 end
@@ -44,7 +47,7 @@ Profile.all.each do |profile|
           review_id: review.id,
           timestamp: rand(1..1800),
           comment: Faker::Lorem.paragraph_by_chars(rand(75..300), false),
-          helpfulness: rand(-100..100),
+          helpfulness: [rand(1..100), rand(1..100)],
           tags: Faker::Lorem.words(rand(0..9)).delete_if { |tag| tag.length < 3 }
         )
       end

@@ -1,27 +1,37 @@
-%h1 Listing posts
+.feed
+  - @posts.each do |post|
+    - profile = get_profile(post.id)
+    - number_reviews = Review.where(post_id: post.id).length
+    - coachability = (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
+    .card.shadow-lg.border.border-dark
+      .card-header.bg-secondary
+        %p(style='font-size: 12px;') Posted by #{link_to profile.tag + ' (' + profile.sr.to_s + ')', profile_path(id: profile.id), class: 'text-white'} #{time_ago_in_words(post.created_at)} ago...
+        = render :partial => 'post', :locals => { post: post, profile: profile}
+      .card-body.bg-dark.d-flex.justify-content-around
+        =image_tag 'rank-' + get_student_rank(post.id).to_s + '.png'
+        %div
+          - if profile.roles.length > 1
+            =image_tag 'flex.png'
+          - profile.roles.each do |role|
+            =image_tag role.to_s + '.png'
+        -# =post.link
+        =image_tag 'thumbnail.jpg', class: 'image-thumbnail'
+        -# =image_tag 'thumbnail.jpg', class: 'img-fluid', style: 'max-width: 100%; height: auto;'
+        %div(style='z-index: 2')
+          %svg(style='100%;' height='100%' viewBox='0 0 42 42' class='donut')
+            %circle.donut-hole(cx='21' cy='21' r='15.91549430918954' fill='transparent')
+            %circle.donut-ring(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' stroke-width='5')
+            %circle.donut-segment(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#ff3333' stroke-width='5' stroke-dasharray='#{coachability} #{100-coachability}' stroke-dashoffset='0')
+      .card-footer.bg-secondary
+        %span= fa_icon 'comment'
+        %span(style='font-size: 12px;')
+          -if number_reviews == 0
+            No reviews yet
+          -else
+            (#{number_reviews}) #{'review'.pluralize(number_reviews)}
 
-%table
-  %thead
-    %tr
-      %th Profile
-      %th Title
-      %th Link
-      %th Coachability
-      %th
-      %th
-      %th
 
-  %tbody
-    - @posts.each do |post|
-      %tr
-        %td= post.profile
-        %td= post.title
-        %td= post.link
-        %td= post.coachability
-        %td= link_to 'Show', post
-        %td= link_to 'Edit', edit_post_path(post)
-        %td= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
 
-%br
 
-= link_to 'New Post', new_post_path
+-# #feed
+-# =javascript_pack_tag 'feed'

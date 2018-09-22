@@ -5,5 +5,7 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { minimum: 3, maximum: 50 }
   validates :link, presence: true
 
+  serialize :coachability, Array
+
   # TODO: link validation.
 end

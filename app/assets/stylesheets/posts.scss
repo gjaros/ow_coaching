@@ -1,3 +1,29 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import './base/colors';
+
+.feed > .card {
+  margin-bottom: 10px;
+  img {
+    height: 64px;
+    width: 64px;
+  }
+}
+
+// .btn-lime {
+//   background-color: $lime-green;
+// }
+
+
+
+// .btn {
+//   .btn-outline-lime {
+//     border-color: $lime-green;
+//     &:hover {
+//       color: $dark;
+//       background-color: $lime-green;
+//     }
+//   }
+// }

@@ -8,6 +8,7 @@ class Tip < ApplicationRecord
   validates :tags, length: { maximum: 10 }
 
   serialize :tags, Array
+  serialize :helpfulness, Array
 
   private
 
