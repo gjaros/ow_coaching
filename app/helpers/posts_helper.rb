@@ -1,6 +1,6 @@
 module PostsHelper
 
-  def get_student_rank(post_id)
+  def get_rank(post_id)
     sr = Profile.find(Post.find(post_id).profile_id).sr
 
     case

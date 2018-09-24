@@ -1,12 +1,36 @@
-%button.btn.btn-primary.btn-block.font-weight-bold(data-target='#post-#{post.id}' data-toggle='modal' type='button')= post.title
+-# -if Review.where(post_id: post.id).length != 0
+%button.btn.btn-primary.btn-block.font-weight-bold.text-truncate(data-target='#post-#{post.id}' data-toggle='modal' type='button')= post.title
 
-.modal.fade(id='post-#{post.id}' aria-hidden='true' aria-labelledby='exampleModalLabel' role='dialog' tabindex='-1')
-  .modal-dialog(role='document')
-    .modal-content
-      .modal-header
-        %h5#exampleModalLabel.modal-title= post.title
-        %button.close(aria-label='Close' data-dismiss='modal' type='button')
+.modal.fade(id='post-#{post.id}' aria-hidden='true' role='dialog' tabindex='-1')
+  .modal-dialog.modal-lg(role='document')
+    .modal-content.bg-secondary.text-white
+
+      .modal-header.bg-dark.border-dark
+        .container
+          %p(style='font-size: 12px;') Posted by #{link_to profile.tag + ' (' + profile.sr.to_s + ')', profile_path(id: profile.id), class: 'text-primary'} #{time_ago_in_words(post.created_at)} ago...
+          %svg(width='32' height='32' viewBox='0 0 42 42' class='donut')
+            %circle.donut-hole(cx='21' cy='21' r='15.91549430918954' fill='transparent')
+            %circle.donut-ring(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' stroke-width='5')
+            %circle.donut-segment(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#ff3333' stroke-width='5' stroke-dasharray='#{coachability} #{100-coachability}' stroke-dashoffset='0')
+          -# =image_tag 'rank-' + get_rank(post.id).to_s + '.png'
+          %h4.modal-title.d-inline= post.title
+        %button.close.text-white(aria-label='Close' data-dismiss='modal' type='button')
           %span(aria-hidden='true') ×
-      .modal-body ...
-      .modal-footer
-        %button.btn.btn-secondary(data-dismiss='modal' type='button') Close
+
+      .modal-body.border-dark
+        .embed-responsive.embed-responsive-16by9.rounded.mb-2.sticky-top
+          %iframe.embed-responsive-item(width="560" height="315" src="https://www.youtube.com/embed/ahWZdhcrry4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
+        -if Review.where(post_id: post.id).length == 0
+          -if Profile.find(current_user.id).sr > profile.sr
+            %p Sorry, you aren't a high enough SR to review this post.
+          -else
+            =link_to 'Write a Review!', new_post_path, class: 'btn btn-primary btn-block'
+            -# %p No reviews yet. Would you like to write one? Log in!
+        -else
+          =render :partial => 'reviews', :locals => { reviews: Review.where(post_id: post.id) }
+
+      .modal-footer.bg-dark.border-dark
+        %button.btn.btn-warning.btn-block.font-weight-bold(data-dismiss='modal' type='button') Close
+
+-# -else
+-#   %button.btn.btn-primary.btn-block.font-weight-bold.text-truncate(disabled)= post.title

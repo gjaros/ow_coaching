@@ -2,28 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import './base/colors';
-
-.feed > .card {
+.card {
   margin-bottom: 10px;
-  img {
+  .card-icon {
     height: 64px;
     width: 64px;
   }
 }
 
-// .btn-lime {
-//   background-color: $lime-green;
-// }
+.chart-text {
+  fill: #000;
+  -moz-transform: translateY(0.25em);
+  -ms-transform: translateY(0.25em);
+  -webkit-transform: translateY(0.25em);
+  transform: translateY(0.25em);
+}
 
-
-
-// .btn {
-//   .btn-outline-lime {
-//     border-color: $lime-green;
-//     &:hover {
-//       color: $dark;
-//       background-color: $lime-green;
-//     }
-//   }
-// }
+.chart-number {
+  font-size: 0.6em;
+  line-height: 1;
+  text-anchor: middle;
+}
