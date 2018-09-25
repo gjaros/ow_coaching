@@ -10,6 +10,11 @@
   }
 }
 
+.badge-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .chart-text {
   fill: #000;
   -moz-transform: translateY(0.25em);
@@ -22,4 +27,8 @@
   font-size: 0.6em;
   line-height: 1;
   text-anchor: middle;
+}
+
+.modal-lg {
+  max-width: 80% !important;
 }

@@ -25,4 +25,12 @@ module PostsHelper
     Profile.find(Post.find(post_id).profile_id)
   end
 
+  def get_reviewer_sr(review)
+    Profile.find(review.profile_id).sr
+  end
+
+  def get_poster_sr(poster)
+    Profile.find(poster.profile_id).sr
+  end
+
 end

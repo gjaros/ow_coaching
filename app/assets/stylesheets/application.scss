@@ -17,11 +17,9 @@
  */
 
 $primary: #bfff00 !default;
+$warning: #ffd633 !default;
 
 @import 'bootstrap';
 @import 'font-awesome';
-
-body {
-  padding-top: 65px;
-  background-image: url('./background.png')
-}
+@import 'base/colors';
+@import 'base/settings';

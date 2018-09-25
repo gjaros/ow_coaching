@@ -1,0 +1,22 @@
+// primary font import
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+// secondary font import
+@import url('https://fonts.googleapis.com/css?family=Varela');
+
+$primary-font: 'Russo One', sans-serif;
+$secondary-font: 'Varela', sans-serif;
+
+body, li, p {
+  font-family: $secondary-font;
+  // font-size: 18px;
+}
+
+button, a, h1, h2, h3, h4, h5, h6 {
+  font-family: $primary-font;
+}
+
+//padding for navbar
+body {
+  padding-top: 65px;
+  background-image: url('./background.png')
+}
