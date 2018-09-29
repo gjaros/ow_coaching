@@ -12,6 +12,6 @@
           %p
             %a.text-warning(href='#')=Time.at(tip.timestamp).strftime("%H:%M:%S")
           %p=tip.comment
-          %p #{tip.helpfulness[0]} of #{tip.helpfulness[0] + tip.helpfulness[1]} found this helpful.
+          %p {tip.helpfulness[0]} of {tip.helpfulness[0] + tip.helpfulness[1]} found this helpful.
           -tip.tags.each do |tag|
             %a.badge.badge-pill.badge-light.text-dark.mr-1.mb-2=tag

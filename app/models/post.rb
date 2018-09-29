@@ -1,9 +1,10 @@
 class Post < ApplicationRecord
   belongs_to :profile
   has_many :reviews
+  has_one_attached :video
+  has_one_attached :thumbnail
 
   validates :title, presence: true, length: { minimum: 3, maximum: 50 }
-  validates :link, presence: true
 
   serialize :coachability, Array
 

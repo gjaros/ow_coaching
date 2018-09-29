@@ -18,11 +18,6 @@ RSpec.describe Post, type: :model do
       expect(post.save).to eq(false)
     end
 
-    it 'ensures presence of link' do
-      post.link = nil
-      expect(post.save).to eq(false)
-    end
-
     it 'should save successfully' do
       expect(post.save).to eq(true)
     end

@@ -5,11 +5,20 @@
       %ul
         - @post.errors.full_messages.each do |message|
           %li= message
+
+  = f.hidden_field :profile_id, value: Profile.find(current_user.id).id
+  
   .field
     = f.label :title
     = f.text_field :title
   .field
-    = f.label :link
-    = f.text_field :link
+    = f.label :video
+    = f.file_field :video
+  .field
+    = f.label :thumbnail
+    = f.file_field :thumbnail
+  -# .field
+  -#   = f.label :link
+  -#   = f.text_field :link
   .actions
     = f.submit 'Save'

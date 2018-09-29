@@ -3,9 +3,8 @@
     -@posts.each do |post|
       -profile = get_profile(post.id)
       -number_reviews = Review.where(post_id: post.id).length
-      -coachability = (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
+      -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
       .card.shadow-lg.border.border-dark
-
         .card-header.bg-secondary
           %p(style='font-size: 12px;') Posted by #{link_to profile.tag + ' (' + profile.sr.to_s + ')', profile_path(id: profile.id), class: 'text-white'} #{time_ago_in_words(post.created_at)} ago...
           %button.btn.btn-primary.btn-block.text-truncate(data-target='#post-#{post.id}' data-toggle='modal' type='button')= post.title
@@ -30,7 +29,7 @@
                   -else
                     =image_tag profile.roles[0] + '.png', class: 'card-icon'
             .col-xs-9.col-sm-6
-              =image_tag 'thumbnail.jpg', class: 'img-fluid'
+              =image_tag post.thumbnail, class: 'img-fluid'
 
         .card-footer.bg-secondary
           %span= fa_icon 'comment'
@@ -45,10 +44,12 @@
       .d-flex.flex-wrap.justify-content-center
         -@recommended_posts.each do |post|
           -profile = get_profile(post.id)
+          -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
           %button.btn.btn-outline-primary.btn-sm.m-1(data-target='#post-#{post.id}' data-toggle='modal' type='button')
             =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'badge-icon'
             -if profile.roles.length > 1
-              =image_tag 'flex.png', class: 'card-icon'
+              =image_tag 'flex.png', class: 'badge-icon'
             -else
               =image_tag profile.roles[0] + '.png', class: 'badge-icon'
             %span.badge.badge-light=Review.all.where(post_id: post.id).length
+          = render :partial => 'post_modal', :locals => { post: post, profile: profile, coachability: coachability}
