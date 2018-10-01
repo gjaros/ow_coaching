@@ -1,7 +1,7 @@
-%h1 Editing post
+%h1.p-3.mb-0.rounded-top.bg-dark.text-warning Edit post
 
 = render 'form'
 
-= link_to 'Show', @post
-\|
-= link_to 'Back', posts_path
+.p-3.m-0.rounded-bottom.bg-dark
+  = link_to 'Show', @post, class: 'btn btn-light'
+  = link_to 'Back', posts_path, class: 'btn btn-secondary'

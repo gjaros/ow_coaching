@@ -19,6 +19,7 @@
 //= require bootstrap-sprockets
 
 $(document).ready(function(){
+
   $('.fade-tooltip').click(function(){
       var that = $(this)
       that.tooltip('show');
