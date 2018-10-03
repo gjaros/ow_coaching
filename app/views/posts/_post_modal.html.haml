@@ -21,7 +21,7 @@
         - reviews.each do |review|
           - Tip.where(review_id: review.id).each { |tip| tips.push(tip) }
           - profiles.push(Profile.find(review.profile_id))
-        #owc-post-payload{ post: post.to_json, video: url_for(post.video).to_json, reviews: reviews.to_json, profiles: profiles.to_json, tips: tips.to_json }
+        #owc-post-payload{ post: post.to_json, video: rails_blob_path(post.video).to_json, reviews: reviews.to_json, profiles: profiles.to_json, tips: tips.to_json }
         #owc_post
         = javascript_pack_tag 'owc_post'
 
