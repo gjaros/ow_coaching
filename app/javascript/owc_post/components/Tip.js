@@ -1,12 +1,15 @@
 import React from 'react';
 import moment from 'moment';
+import { changeTime } from '../actions/timestamp';
+import { connect } from 'react-redux';
 
-export default ({ timestamp, comment, helpfulness, tags }) => (
+const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
   <div className='border border-primary rounded p-2 mb-1'>
     <p>
       <a
         className='text-warning'
-        // onClick={(e) => { props.dispatch }}
+        style={{ cursor: 'pointer' }}
+        onClick={(e) => { dispatch(changeTime(timestamp)) }}
         >
           { moment().startOf('day').seconds(timestamp).format('H:mm:ss') }
       </a>
@@ -26,3 +29,11 @@ export default ({ timestamp, comment, helpfulness, tags }) => (
     }
   </div>
 );
+
+const mapStateToProps = (state) => {
+  return {
+    state: state
+  }
+};
+
+export default connect(mapStateToProps)(Tip);

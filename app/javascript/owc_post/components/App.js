@@ -20,7 +20,7 @@ const App = (props) => (
     <div className='col-xl-6'>
       {
         props.reviews.map((review) => (
-          <Review key={review.id} {...review} />
+          <Review key={review.id} {...review} dispatch={props.dispatch} />
         ))
       }
     </div>

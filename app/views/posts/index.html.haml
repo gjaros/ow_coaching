@@ -12,23 +12,23 @@
 
         .card-body.bg-dark
           .row
-            .col-xs-3.col-sm-6
+            .col-12.col-sm-2
               .row.h-100.d-flex.align-items-center
-                .col-xs-12.col-sm-4
+                .col-4.col-sm-12.d-flex.justify-content-center
                   %svg(width='64' height='64' viewBox='0 0 42 42' class='donut')
                     %circle.donut-hole(cx='21' cy='21' r='15.91549430918954' fill='transparent')
                     %circle.donut-ring(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' stroke-width='5')
                     %circle.donut-segment(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#ff3333' stroke-width='5' stroke-dasharray='#{coachability} #{100-coachability}' stroke-dashoffset='0')
                     %g.chart-text
                       %text.chart-number(x='50%' y='50%' stroke='white')= coachability.to_s + '%'
-                .col-xs-12.col-sm-4
+                .col-4.col-sm-12.d-flex.justify-content-center
                   =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'card-icon'
-                .col-xs-12.col-sm-4
+                .col-4.col-sm-12.d-flex.justify-content-center
                   -if profile.roles.length > 1
                     =image_tag 'flex.png', class: 'card-icon'
                   -else
                     =image_tag profile.roles[0] + '.png', class: 'card-icon'
-            .col-xs-9.col-sm-6
+            .col-12.col-sm-10.mt-3.mt-sm-0.p-3.px-sm-5.align-self-center
               =image_tag post.thumbnail, class: 'img-fluid'
 
         .card-footer.bg-secondary

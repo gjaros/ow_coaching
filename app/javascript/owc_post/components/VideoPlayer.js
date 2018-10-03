@@ -7,6 +7,7 @@ export default class VideoPlayer extends React.Component {
       source: props.source,
       timestamp: props.timestamp
     };
+    // this.videoRef = React.createRef();
   }
 
   componentDidMount() {
@@ -23,17 +24,21 @@ export default class VideoPlayer extends React.Component {
   }
 
   seek = () => {
-    console.log('inside seek')
-    console.log(this.state.timestamp)
-    console.log(this.video.currentTime)
-    this.video.currentTime = this.state.timestamp;
+    // console.log('inside seek')
+    // console.log(this.state.timestamp)
+    // console.log(this.videoRef.current)
+    // console.log('before: ' + this.videoRef.current.currentTime)
+    // this.videoRef.current.currentTime = this.state.timestamp;
+    // console.log('after: ' + this.videoRef.current.currentTime)
+    this.vedio.currentTime = this.state.timestamp;
   }
 
   render() {
     return (
       <div>
         <video
-          ref={v => (this.video = v)}
+          ref={v => (this.vedio = v)}
+          // ref={this.videoRef}
           id='video-player'
           height='200px'
           src={this.state.source}
