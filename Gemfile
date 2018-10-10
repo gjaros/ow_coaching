@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'kaminari'
 gem 'font-awesome-rails'
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'

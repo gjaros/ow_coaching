@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import Feed from './components/Feed';
 import store from './constants/store';
-
-console.log(store.getState())
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Feed />
   </Provider>,
-  document.querySelector('#owc_post')
+  document.querySelector('#owc_feed')
 );

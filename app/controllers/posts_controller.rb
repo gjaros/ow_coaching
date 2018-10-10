@@ -6,10 +6,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc).page params[:page]
+    @number_of_posts = Post.all.length
     @recommended_posts = []
 
-    if current_user
+    if current_user && has_profile?(current_user)
       user_profile = Profile.find(current_user.id)
       Post.all.each do |post|
         poster_profile = Profile.find(post.profile_id)

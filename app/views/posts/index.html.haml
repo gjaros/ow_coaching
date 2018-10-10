@@ -1,55 +1,62 @@
-.row.justify-content-md-center
-  .col-sm-12.col-md-8
-    -@posts.each do |post|
-      -profile = get_profile(post.id)
-      -number_reviews = Review.where(post_id: post.id).length
-      -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
-      .card.shadow-lg.border.border-dark
-        .card-header.bg-secondary
-          %p(style='font-size: 12px;') Posted by #{link_to profile.tag + ' (' + profile.sr.to_s + ')', profile_path(id: profile.id), class: 'text-white'} #{time_ago_in_words(post.created_at)} ago...
-          %button.btn.btn-primary.btn-block.text-truncate(data-target='#post-#{post.id}' data-toggle='modal' type='button')= post.title
-          = render :partial => 'post_modal', :locals => { post: post, profile: profile, coachability: coachability}
+-# = paginate @posts
 
-        .card-body.bg-dark
-          .row
-            .col-12.col-sm-2
-              .row.h-100.d-flex.align-items-center
-                .col-4.col-sm-12.d-flex.justify-content-center
-                  %svg(width='64' height='64' viewBox='0 0 42 42' class='donut')
-                    %circle.donut-hole(cx='21' cy='21' r='15.91549430918954' fill='transparent')
-                    %circle.donut-ring(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' stroke-width='5')
-                    %circle.donut-segment(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#ff3333' stroke-width='5' stroke-dasharray='#{coachability} #{100-coachability}' stroke-dashoffset='0')
-                    %g.chart-text
-                      %text.chart-number(x='50%' y='50%' stroke='white')= coachability.to_s + '%'
-                .col-4.col-sm-12.d-flex.justify-content-center
-                  =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'card-icon'
-                .col-4.col-sm-12.d-flex.justify-content-center
-                  -if profile.roles.length > 1
-                    =image_tag 'flex.png', class: 'card-icon'
-                  -else
-                    =image_tag profile.roles[0] + '.png', class: 'card-icon'
-            .col-12.col-sm-10.mt-3.mt-sm-0.p-3.px-sm-5.align-self-center
-              =image_tag post.thumbnail, class: 'img-fluid'
+#owc_feed_payload{ number_of_posts: @number_of_posts }
+#owc_feed
+= javascript_pack_tag 'owc_feed'
 
-        .card-footer.bg-secondary
-          %span= fa_icon 'comment'
-          %p.d-inline
-            -if number_reviews == 0
-              No reviews yet
-            -else
-              (#{number_reviews}) #{'review'.pluralize(number_reviews)}
-  .col-sm-12.col-md-4.d-none.d-md-block
-    .bg-dark.shadow-lg.border.border-dark.rounded.text-white.p-3
-      %h5.text-center Recommended Posts
-      .d-flex.flex-wrap.justify-content-center
-        -@recommended_posts.each do |post|
-          -profile = get_profile(post.id)
-          -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
-          %button.btn.btn-outline-primary.btn-sm.m-1(data-target='#post-#{post.id}' data-toggle='modal' type='button')
-            =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'badge-icon'
-            -if profile.roles.length > 1
-              =image_tag 'flex.png', class: 'badge-icon'
-            -else
-              =image_tag profile.roles[0] + '.png', class: 'badge-icon'
-            %span.badge.badge-light=Review.all.where(post_id: post.id).length
-          = render :partial => 'post_modal', :locals => { post: post, profile: profile, coachability: coachability}
+-# .row.justify-content-md-center
+-#   .col-sm-12.col-md-8
+-#     -@posts.each do |post|
+-#       -profile = get_profile(post.id)
+-#       -number_reviews = Review.where(post_id: post.id).length
+-#       -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
+-#       .card.shadow-lg.border.border-dark
+-#         .card-header.bg-secondary
+-#           %p(style='font-size: 12px;') Posted by #{link_to profile.tag + ' (' + profile.sr.to_s + ')', profile_path(id: profile.id), class: 'text-white'} #{time_ago_in_words(post.created_at)} ago...
+-#           %button.btn.btn-primary.btn-block.text-truncate(data-target='#post-#{post.id}' data-toggle='modal' type='button')= post.title
+-#           = render :partial => 'post_modal', :locals => { post: post, profile: profile, coachability: coachability}
+-#
+-#         .card-body.bg-dark
+-#           .row
+-#             .col-12.col-sm-2
+-#               .row.h-100.d-flex.align-items-center
+-#                 .col-4.col-sm-12.d-flex.justify-content-center
+-#                   %svg(width='64' height='64' viewBox='0 0 42 42' class='donut')
+-#                     %circle.donut-hole(cx='21' cy='21' r='15.91549430918954' fill='transparent')
+-#                     %circle.donut-ring(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' stroke-width='5')
+-#                     %circle.donut-segment(cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#ff3333' stroke-width='5' stroke-dasharray='#{coachability} #{100-coachability}' stroke-dashoffset='0')
+-#                     %g.chart-text
+-#                       %text.chart-number(x='50%' y='50%' stroke='white')= coachability.to_s + '%'
+-#                 .col-4.col-sm-12.d-flex.justify-content-center
+-#                   =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'card-icon'
+-#                 .col-4.col-sm-12.d-flex.justify-content-center
+-#                   -if profile.roles.length > 1
+-#                     =image_tag 'flex.png', class: 'card-icon'
+-#                   -else
+-#                     =image_tag profile.roles[0] + '.png', class: 'card-icon'
+-#             .col-12.col-sm-10.mt-3.mt-sm-0.p-3.px-sm-5.align-self-center
+-#               =image_tag '/images/thumbnail.jpg', class: 'img-fluid'
+-#               -# =image_tag post.thumbnail, class: 'img-fluid'
+-#
+-#         .card-footer.bg-secondary
+-#           %span= fa_icon 'comment'
+-#           %p.d-inline
+-#             -if number_reviews == 0
+-#               No reviews yet
+-#             -else
+-#               (#{number_reviews}) #{'review'.pluralize(number_reviews)}
+-#   .col-sm-12.col-md-4.d-none.d-md-block
+-#     .bg-dark.shadow-lg.border.border-dark.rounded.text-white.p-3
+-#       %h5.text-center Recommended Posts
+-#       .d-flex.flex-wrap.justify-content-center
+-#         -@recommended_posts.each do |post|
+-#           -profile = get_profile(post.id)
+-#           -coachability = (post.coachability[0] == 0 && post.coachability[1] == 0) ? 0 : (post.coachability[0]/(post.coachability[0] + post.coachability[1]).to_f * 100).to_i
+-#           %button.btn.btn-outline-primary.btn-sm.m-1(data-target='#post-#{post.id}' data-toggle='modal' type='button')
+-#             =image_tag 'rank-' + get_rank(post.id).to_s + '.png', class: 'badge-icon'
+-#             -if profile.roles.length > 1
+-#               =image_tag 'flex.png', class: 'badge-icon'
+-#             -else
+-#               =image_tag profile.roles[0] + '.png', class: 'badge-icon'
+-#             %span.badge.badge-light=Review.all.where(post_id: post.id).length
+-#           = render :partial => 'post_modal', :locals => { post: post, profile: profile, coachability: coachability}

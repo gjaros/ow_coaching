@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  paginates_per 5
+
   belongs_to :profile
   has_many :reviews
   has_one_attached :video

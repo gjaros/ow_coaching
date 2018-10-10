@@ -1,7 +1,5 @@
-let newState = [];
-
 export default (state = 0, action) => {
-  newState = [];
+  let newState = [];
   switch(action.type) {
     case 'CHANGE_TIME':
       return action.newTime;

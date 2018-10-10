@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import reviewsReducer from '../reducers/reviewsReducer';
+import postsReducer from '../reducers/postsReducer';
 import timestampReducer from '../reducers/timestampReducer';
 
 const ow_coach = combineReducers({
-  reviewsReducer,
+  postsReducer,
   timestampReducer
 });
 

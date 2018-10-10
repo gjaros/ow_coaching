@@ -33,4 +33,8 @@ module PostsHelper
     Profile.find(poster.profile_id).sr
   end
 
+  def has_profile?(current_user)
+    true if Profile.where(user_id: current_user.id).length != 0
+  end
+
 end
