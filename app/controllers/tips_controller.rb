@@ -4,7 +4,7 @@ class TipsController < ApplicationController
   # GET /tips
   # GET /tips.json
   def index
-    @tips = Tip.all
+    @tips = Tip.all.where(review_id: params[:review_id])
   end
 
   # GET /tips/1

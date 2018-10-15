@@ -8,9 +8,6 @@ import axios from 'axios-on-rails';
 
 const node = document.getElementById('owc_feed_payload');
 const numberOfPosts = JSON.parse(node.getAttribute('number_of_posts'));
-console.log(numberOfPosts)
-
-// http://localhost:3000/posts?page=2
 
 class Feed extends React.Component {
   constructor(props) {
@@ -18,7 +15,7 @@ class Feed extends React.Component {
     this.state = {
       posts: props.posts,
       hasMoreItems: true,
-      page: 1
+      page: 0
     };
   }
 
@@ -29,27 +26,25 @@ class Feed extends React.Component {
   }
 
   loadMore = (page) => {
-    // axios.get('/posts?page='+page+'.json')
-    axios.get('/posts', {
-      params: {
-        page: page
-      }
+    axios.get('/posts.json', {
+      params: { page: page }
     })
-      .then((response) => {
-        console.log(response.data);
-        this.props.dispatch(loadPosts(response.data));
-        this.setState({ hasMoreItems: this.state.posts.length < numberOfPosts ? true : false, page: this.state.page + 1 });
-      })
-      .catch(error => console.log(error));
+    .then((response) => {
+      this.props.dispatch(loadPosts(response.data));
+      this.setState({
+        hasMoreItems: this.state.posts.length < numberOfPosts ? true : false,
+        page: this.state.page + 1
+      });
+    })
   }
 
   render() {
     let items = [];
 
-    this.state.posts.map((post, index) => {
+    this.state.posts.map((post) => {
       items.push(
         <div key={post.id}>
-          <Post {...post} />
+          <Post {...post} dispatch={this.props.dispatch}/>
           <Modal {...post} />
         </div>
       );
@@ -60,7 +55,7 @@ class Feed extends React.Component {
         pageStart={0}
         loadMore={this.loadMore}
         hasMore={this.state.hasMoreItems}
-        loader={<p className='bg-dark '>Loading...</p>}>
+        loader={<div key={0} className='bg-dark '>Loading...</div>}>
           { items }
       </InfiniteScroll>
     );
@@ -69,8 +64,7 @@ class Feed extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    timestamp: state.timestampReducer,
-    posts: state.postsReducer
+    posts: state.postsReducer.posts
   }
 };
 

@@ -20,12 +20,12 @@ export default class VideoPlayer extends React.Component {
   }
 
   seek = () => {
-    console.log('inside seek')
-    console.log(this.state.timestamp)
-    console.log(this.videoRef.current)
-    console.log('before: ' + this.videoRef.current.currentTime)
+    // console.log('inside seek')
+    // console.log(this.state.timestamp)
+    // console.log(this.videoRef.current)
+    // console.log('before: ' + this.videoRef.current.currentTime)
     this.videoRef.current.currentTime = this.state.timestamp;
-    console.log('after: ' + this.videoRef.current.currentTime)
+    // console.log('after: ' + this.videoRef.current.currentTime)
   }
 
   render() {
