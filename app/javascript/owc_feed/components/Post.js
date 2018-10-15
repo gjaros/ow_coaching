@@ -1,13 +1,20 @@
 import React from 'react';
+import axios from 'axios-on-rails';
+// import { getReviews } from '../actions/posts'
+import store from '../constants/store';
 
-export default ({ id, profile_id, title, coachability, created_at }) => (
+export default ({ id, profile_id, title, coachability, created_at, dispatch }) => (
   <div className='card shadow-lg border border-dark'>
     <section className='card-header bg-secondary'>
       <p style={{ fontSize: '12px' }}>Posted by ... at {created_at}</p>
       <button className='btn btn-primary btn-block text-truncate'
-        data-target={'post-' + id}
+        data-target={'#post-' + id}
         data-toggle='modal'
-        type='button'>
+        type='button'
+        // onClick={(e) => {
+        //   dispatch(requestReviews(id))
+        // }}
+        >
         {title}
       </button>
     </section>

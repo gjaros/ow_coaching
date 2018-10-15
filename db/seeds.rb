@@ -57,7 +57,7 @@ owl_tags.length.times do |i|
     roles: ['tank', 'support', 'damage'].sample(rand(1..3))
   )
   # each profile creates 0 to 3 posts
-  rand(0..3).times do
+  rand(0..2).times do
     post =  Post.create!(
       profile_id: profile.id,
       title: Faker::Lorem.sentence,
@@ -68,7 +68,7 @@ end
 
 # each profile creates a review with 5 to 13 tips for 3 to 7 posts
 Profile.all.each do |profile|
-  Post.all.sample(rand(3..7)).each do |post|
+  Post.all.sample(rand(3..5)).each do |post|
     # to make sure validation doesn't trigger
     if Profile.find(profile.id).sr > Profile.find(Post.find(post.id).profile_id).sr
       review = Review.create!(
@@ -78,7 +78,7 @@ Profile.all.each do |profile|
         rating: rand(-100..100),
         title: Faker::Lorem.sentence
       )
-      rand(5..13).times do
+      rand(3..7).times do
         tip = Tip.create!(
           review_id: review.id,
           timestamp: rand(1..1800),
