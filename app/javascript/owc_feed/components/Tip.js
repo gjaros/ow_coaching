@@ -11,7 +11,7 @@ const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
         style={{ cursor: 'pointer' }}
         onClick={(e) => { dispatch(changeTime(timestamp)) }}
         >
-          { moment().startOf('day').seconds(timestamp).format('H:mm:ss') }
+          { moment().startOf('day').seconds(timestamp).format('mm:ss') }
       </a>
     </p>
     <p>{ comment }</p>

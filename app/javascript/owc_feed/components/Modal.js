@@ -1,16 +1,16 @@
 import React from "react";
 import Review from './Review';
-import { connect } from 'react-redux';
+import moment from 'moment'
 import VideoPlayer from './VideoPlayer';
 
-const Modal = ({ id, profile_id, title, coachability, created_at, reviews, timestamp }) => (
+export default ({ id, profile_id, title, coachability, created_at, updated_at, poster_profile, reviews }) => (
   <div id={'post-' + id} className='modal fade' aria-hidden='true' role='dialog' tabIndex='-1'>
     <div className='modal-dialog modal-lg' role='document'>
         <div className='modal-content bg-secondary text-white'>
           <section className='modal-header bg-dark border-dark'>
             <div className='container'>
-              <p style={{ fontSize: '12px' }} className='text-primary'>Posted by ... ago</p>
-              <div className='d-flex align-items-center'>
+              <p className='text-white' style={{ fontSize: '12px' }}>Posted by <a href={'profiles/' + id} className='text-primary'>{poster_profile.tag}</a> ({poster_profile.sr}) { moment(created_at).fromNow() }</p>
+              <div className='d-flex align-reviews-center'>
                 <svg width='32' height='32' viewBox='0 0 42 42' className='donut'>
                   <circle className='donut-hole' cx='21' cy='21' r='15.91549430918954' fill='transparent'></circle>
                   <circle className='donut-ring' cx='21' cy='21' r='15.91549430918954' fill='transparent' stroke='#00e600' strokeWidth='5'></circle>
@@ -46,13 +46,4 @@ const Modal = ({ id, profile_id, title, coachability, created_at, reviews, times
         </div>
     </div>
   </div>
-);
-
-const mapStateToProps = (state) => {
-  return {
-    reviews: state.postsReducer.reviews,
-    timestamp: state.timestampReducer
-  }
-};
-
-export default connect(mapStateToProps)(Modal);
+)
