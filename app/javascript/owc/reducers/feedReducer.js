@@ -9,7 +9,6 @@ const user = {
 }
 
 const initialState = {
-  numberOfPosts,
   page: 0,
   hasMoreItems: true,
   user,
@@ -28,7 +27,7 @@ export default (state = initialState, action) => {
     case 'LOAD_POSTS':
       return {
         ...state,
-        hasMoreItems: state.posts.length < state.numberOfPosts ? true : false,
+        hasMoreItems: state.posts.length < numberOfPosts ? true : false,
         page: state.page + 1,
         posts: state.posts.concat(action.posts)
       }
@@ -96,7 +95,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.map(post => post.id === action.review.post_id ?
-          { ...post, reviews: post.reviews.concat(action.review)} : { ...post }
+          { ...post, reviews: post.reviews.concat(action.review) } : { ...post }
         )
       }
       break
@@ -104,7 +103,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.map(post => post.id === action.review.post_id ?
-          { ...post, reviews: post.reviews.filter(review => review.id != action.review.id).concat(action.review)} : { ...post }
+          { ...post, reviews: post.reviews.filter(review => review.id != action.review.id).concat(action.review) } : { ...post }
+        )
+      }
+      break
+    case 'DELETE_REVIEW':
+      return {
+        ...state,
+        posts: state.posts.map(post => post.id === action.review.post_id ?
+          { ...post, reviews: post.reviews.filter(review => review.id != action.review.id) } : { ...post }
         )
       }
       break

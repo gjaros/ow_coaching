@@ -41,3 +41,8 @@ export const editReview = (review) => ({
   type: 'EDIT_REVIEW',
   review
 })
+
+export const deleteReview = (review) => ({
+  type: 'DELETE_REVIEW',
+  review
+})

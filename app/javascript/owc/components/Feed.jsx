@@ -8,7 +8,7 @@ import { loadPosts } from '../actions/feed'
 import axios from 'axios-on-rails'
 import { Link } from 'react-router-dom'
 
-const Feed = ({ numberOfPosts, hasMoreItems, page, user, posts, dispatch }) => (
+const Feed = ({ hasMoreItems, page, user, posts, dispatch }) => (
   <div>
     {
       user.isLoggedIn() ?
@@ -48,9 +48,8 @@ const Feed = ({ numberOfPosts, hasMoreItems, page, user, posts, dispatch }) => (
 )
 
 const mapStateToProps = (state) => {
-  const { numberOfPosts, hasMoreItems, page, user, posts } = state.feedReducer
+  const { hasMoreItems, page, user, posts } = state.feedReducer
   return {
-    numberOfPosts,
     hasMoreItems,
     page,
     user,
