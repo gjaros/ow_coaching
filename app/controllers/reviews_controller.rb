@@ -14,6 +14,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/new
   def new
+    @post = Post.find(params[:post])
     @review = Review.new
   end
 
@@ -28,11 +29,11 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
-        format.json { render :show, status: :created, location: @review }
+        render :json => @review
+        format.html
       else
-        format.html { render :new }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
+        render :json => @review.errors
+        format.html
       end
     end
   end
@@ -42,11 +43,11 @@ class ReviewsController < ApplicationController
   def update
     respond_to do |format|
       if @review.update(review_params)
-        format.html { redirect_to @review, notice: 'Review was successfully updated.' }
-        format.json { render :show, status: :ok, location: @review }
+        render :json => @review
+        format.html
       else
-        format.html { render :edit }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
+        render :json => @review.errors
+        format.html
       end
     end
   end

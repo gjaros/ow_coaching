@@ -1,7 +1,7 @@
-import React from 'react';
-import moment from 'moment';
-import { changeTime } from '../actions/timestamp';
-import { connect } from 'react-redux';
+import React from 'react'
+import moment from 'moment'
+import { changeTime } from '../actions/timestamp'
+import { connect } from 'react-redux'
 
 const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
   <div className='border border-primary rounded p-2 mb-1'>
@@ -19,7 +19,7 @@ const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
     {
       tags.map((tag, index) => (
         <a
-          key={'tag-' + index}
+          key={index}
           href='#'
           className='badge badge-pull badge-light text-dark mr-1 mb-2'
           >
@@ -28,12 +28,12 @@ const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
       ))
     }
   </div>
-);
+)
 
 const mapStateToProps = (state) => {
   return {
     state: state
   }
-};
+}
 
-export default connect(mapStateToProps)(Tip);
+export default connect(mapStateToProps)(Tip)

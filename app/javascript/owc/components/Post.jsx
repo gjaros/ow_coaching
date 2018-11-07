@@ -1,16 +1,19 @@
 import React from 'react'
 import moment from 'moment'
 import { getRank } from '../constants/helpers'
+import { selectPost } from '../actions/feed'
 
-export default ({ id, profile_id, title, coachability, created_at, updated_at, poster_profile, number_of_reviews, reviews }) => (
+export default ({ id, profile_id, title, coachability, created_at, updated_at, poster_profile, number_of_reviews, reviews, dispatch }) => (
   <div className='card shadow-lg border border-dark'>
     <section className='card-header bg-secondary'>
-      <p className='text-white' style={{ fontSize: '12px' }}>Posted by <a href={'profiles/' + id} className='text-primary'>{poster_profile.tag}</a> ({poster_profile.sr}) { moment(created_at).fromNow() }
+      <p className='text-white' style={{ fontSize: '12px' }}>Posted by <a href={'profiles/' + poster_profile.id} className='text-primary'>{poster_profile.tag}</a> ({poster_profile.sr}) { moment(created_at).fromNow() }
       </p>
-      <button className='btn btn-primary btn-block text-truncate'
+      <button
+        className='btn btn-primary btn-block text-truncate'
         data-target={'#post-' + id}
         data-toggle='modal'
         type='button'
+        onClick={(e) => { dispatch(selectPost(id)) }}
         >
         {title}
       </button>
@@ -38,6 +41,9 @@ export default ({ id, profile_id, title, coachability, created_at, updated_at, p
             </div>
           </div>
         </div>
+        <div className='col-12 col-sm-10 mt-3 mt-sm-0 p-3 px-sm-5 align-self-center'>
+          {/* <img className='img-fluid' /> */}
+        </div>
       </div>
     </section>
 
@@ -45,4 +51,4 @@ export default ({ id, profile_id, title, coachability, created_at, updated_at, p
       { reviews.length > 0 ? number_of_reviews : 'No reviews yet' }
     </section>
   </div>
-);
+)

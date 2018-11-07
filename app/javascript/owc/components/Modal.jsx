@@ -1,15 +1,19 @@
-import React from "react";
-import Review from './Review';
+import React from "react"
+import Review from './Review'
 import moment from 'moment'
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from './VideoPlayer'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { createReview } from '../actions/feed'
 
-export default ({ id, profile_id, title, coachability, created_at, updated_at, poster_profile, reviews }) => (
-  <div id={'post-' + id} className='modal fade' aria-hidden='true' role='dialog' tabIndex='-1'>
+const Modal = ({ id, profile_id, title, coachability, video_url, created_at, updated_at, poster_profile, reviews, timestamp, user, dispatch }) => (
+  <div id={'post-' + id} className='modal fade' aria-hidden='true' role='dialog' tabIndex='-1' data-backdrop='false'>
     <div className='modal-dialog modal-lg' role='document'>
         <div className='modal-content bg-secondary text-white'>
+
           <section className='modal-header bg-dark border-dark'>
             <div className='container'>
-              <p className='text-white' style={{ fontSize: '12px' }}>Posted by <a href={'profiles/' + id} className='text-primary'>{poster_profile.tag}</a> ({poster_profile.sr}) { moment(created_at).fromNow() }</p>
+              <p className='text-white' style={{ fontSize: '12px' }}>Posted by <a href={'profiles/' + poster_profile.id } className='text-primary'>{poster_profile.tag}</a> ({poster_profile.sr}) { moment(created_at).fromNow() }</p>
               <div className='d-flex align-reviews-center'>
                 <svg width='32' height='32' viewBox='0 0 42 42' className='donut'>
                   <circle className='donut-hole' cx='21' cy='21' r='15.91549430918954' fill='transparent'></circle>
@@ -24,14 +28,28 @@ export default ({ id, profile_id, title, coachability, created_at, updated_at, p
               <span>×</span>
             </button>
           </section>
+
           <section className='modal-body border-dark'>
             <div className='row'>
               <div className='col-xl-6 pr-3 sticky-top'>
                 <div className='mb-2 sticky-top'>
-                  {/* <VideoPlayer source={'https://www.youtube.com/watch?v=zJ4FA5rH2x8&t=435s'} timestamp={timestamp} /> */}
+                  <VideoPlayer source={video_url} timestamp={timestamp} />
                 </div>
               </div>
               <div className='col-xl-6'>
+                {/* Users logged in and of a higher skill rating can click on this button to write a review */}
+                {
+                  user.isLoggedIn() ?
+                  <Link
+                    role='button'
+                    to={'CreateReview'}
+                    className={'btn btn-primary btn-block mb-2' + (user.profile.sr > poster_profile.sr ? '' : ' disabled')}
+                    onClick={(e) => { dispatch(createReview()) }}
+                    >
+                      Write a Review
+                  </Link> :
+                  <p className='bg-dark rounded text-white text-center p-3'>Login or Sign Up to participate.</p>
+                }
                 {
                   reviews.map((review) => (
                     <Review key={review.id} {...review} />
@@ -40,10 +58,21 @@ export default ({ id, profile_id, title, coachability, created_at, updated_at, p
               </div>
             </div>
           </section>
+
           <section className='modal-footer bg-dark border-dark'>
             <button className='btn btn-warning btn-block' data-dismiss='modal' type='button'>Close</button>
           </section>
+
         </div>
     </div>
   </div>
 )
+
+const mapStateToProps = (state) => {
+  return {
+    timestamp: state.timestampReducer,
+    user: state.feedReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(Modal)

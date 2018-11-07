@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import postsReducer from '../reducers/postsReducer';
+import feedReducer from '../reducers/feedReducer';
 import timestampReducer from '../reducers/timestampReducer';
 
 const ow_coach = combineReducers({
-  postsReducer,
+  feedReducer,
   timestampReducer
 });
 

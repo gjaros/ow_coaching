@@ -8,21 +8,21 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all.order(created_at: :desc).page params[:page]
     @number_of_posts = Post.all.length
-    @recommended_posts = []
-
-    if current_user && has_profile?(current_user)
-      user_profile = Profile.find(current_user.id)
-      Post.all.each do |post|
-        poster_profile = Profile.find(post.profile_id)
-        if poster_profile.sr < user_profile.sr
-          role_match = []
-          poster_profile.roles.each { |role| role_match.push(user_profile.roles.include? role) }
-          if role_match.include? true
-            @recommended_posts.push(post)
-          end
-        end
-      end
-    end
+    # @recommended_posts = []
+    #
+    # if current_user && has_profile?(current_user)
+    #   user_profile = Profile.find(current_user.id)
+    #   Post.all.each do |post|
+    #     poster_profile = Profile.find(post.profile_id)
+    #     if poster_profile.sr < user_profile.sr
+    #       role_match = []
+    #       poster_profile.roles.each { |role| role_match.push(user_profile.roles.include? role) }
+    #       if role_match.include? true
+    #         @recommended_posts.push(post)
+    #       end
+    #     end
+    #   end
+    # end
   end
 
   # GET /posts/1
