@@ -4,8 +4,8 @@ import VideoPlayer from './VideoPlayer'
 import axios from 'axios-on-rails'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { addTip, changeTitle, changeSummary, loadReview, editReview } from '../actions/feed'
-import { changeTime } from '../actions/timestamp'
+import { addTip, changeTitle, changeSummary, editReview } from '../actions/feed'
+import { seekToTimestamp } from '../actions/timestamp'
 
 const EditReview = ({ id, post_id, summary, title, tips, dispatch, timestamp, post, user }) => (
 
@@ -15,9 +15,10 @@ const EditReview = ({ id, post_id, summary, title, tips, dispatch, timestamp, po
         <VideoPlayer
           source={post.video_url}
           timestamp={timestamp}
+          seekTo={seekTo}
           />
-        <button className='btn btn-warning' onClick={(e) => { dispatch(addTip(5)) }}>
-          Add Tip
+        <button className='btn btn-warning' onClick={(e) => { dispatch(addTip(timestamp)) }}>
+          Add Tip @{ moment().startOf('day').seconds(timestamp).format('mm:ss') }
         </button>
         <Link
           role='button'
@@ -35,7 +36,7 @@ const EditReview = ({ id, post_id, summary, title, tips, dispatch, timestamp, po
             })
             .catch(error => console.log(error))
         }}>
-          Submit
+          Save
         </Link>
       </div>
       <div className='col-xl-6'>
@@ -64,7 +65,7 @@ const EditReview = ({ id, post_id, summary, title, tips, dispatch, timestamp, po
               <a
                 className='text-warning'
                 style={{ cursor: 'pointer' }}
-                onClick={(e) => { dispatch(changeTime(tip.timestamp)) }}
+                onClick={(e) => { dispatch(seekToTimestamp(tip.timestamp)) }}
               >
                 { moment().startOf('day').seconds(tip.timestamp).format('mm:ss') }
               </a>
@@ -93,7 +94,8 @@ const mapStateToProps = (state) => {
     summary,
     title,
     tips,
-    timestamp: state.timestampReducer,
+    timestamp: state.timestampReducer.timestamp,
+    seekTo: state.timestampReducer.seekTo,
     post: state.feedReducer.selectedPost,
     user: state.feedReducer.user
   }

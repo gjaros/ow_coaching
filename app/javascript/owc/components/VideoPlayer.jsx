@@ -1,31 +1,37 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { changeTime } from '../actions/timestamp'
 
-export default class VideoPlayer extends React.Component {
+class VideoPlayer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       source: props.source,
-      timestamp: props.timestamp
+      timestamp: props.timestamp,
+      seekTo: 0
     }
     this.videoRef = React.createRef()
   }
 
+  componentDidMount() {
+    this.videoRef.current.ontimeupdate = () => { this.onCurrentTimeChange() }
+  }
+
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
+    if (this.props.seekTo !== prevProps.seekTo) {
       this.setState(
-        { timestamp: this.props.timestamp },
-        () => { this.seek() }
+        { seekTo: this.props.seekTo },
+        () => this.seek()
       )
     }
   }
 
-  seek = (seekTo = 0) => {
-    // console.log('inside seek')
-    // console.log(this.state.timestamp)
-    // console.log(this.videoRef.current)
-    // console.log('before: ' + this.videoRef.current.currentTime)
-    this.videoRef.current.currentTime = this.state.timestamp
-    // console.log('after: ' + this.videoRef.current.currentTime)
+  onCurrentTimeChange = () => {
+    this.props.dispatch(changeTime(this.videoRef.current.currentTime))
+  }
+
+  seek = () => {
+    this.videoRef.current.currentTime = this.state.seekTo
   }
 
   render() {
@@ -47,3 +53,11 @@ export default class VideoPlayer extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    timestamp: state.timestampReducer
+  }
+}
+
+export default connect(mapStateToProps)(VideoPlayer)

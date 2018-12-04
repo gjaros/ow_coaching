@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { changeTime } from '../actions/timestamp'
+import { seekTo } from '../actions/timestamp'
 import { connect } from 'react-redux'
 
 const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
@@ -9,7 +9,7 @@ const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
       <a
         className='text-warning'
         style={{ cursor: 'pointer' }}
-        onClick={(e) => { dispatch(changeTime(timestamp)) }}
+        onClick={(e) => { dispatch(seekTo(timestamp)) }}
         >
           { moment().startOf('day').seconds(timestamp).format('mm:ss') }
       </a>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { createReview } from '../actions/feed'
 
-const Modal = ({ id, profile_id, title, coachability, video_url, created_at, updated_at, poster_profile, reviews, timestamp, user, dispatch }) => (
+const Modal = ({ id, profile_id, title, coachability, video_url, created_at, updated_at, poster_profile, reviews, timestamp, seekTo, user, dispatch }) => (
   <div id={'post-' + id} className='modal fade' aria-hidden='true' role='dialog' tabIndex='-1' data-backdrop='false'>
     <div className='modal-dialog modal-lg' role='document'>
         <div className='modal-content bg-secondary text-white'>
@@ -33,7 +33,7 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
             <div className='row'>
               <div className='col-xl-6 pr-3 sticky-top'>
                 <div className='mb-2 sticky-top'>
-                  <VideoPlayer source={video_url} timestamp={timestamp} />
+                  <VideoPlayer source={video_url} timestamp={timestamp} seekTo={seekTo} />
                 </div>
               </div>
               <div className='col-xl-6'>
@@ -70,7 +70,8 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
 
 const mapStateToProps = (state) => {
   return {
-    timestamp: state.timestampReducer,
+    timestamp: state.timestampReducer.timestamp,
+    seekTo: state.timestampReducer.seekTo,
     user: state.feedReducer.user
   }
 }

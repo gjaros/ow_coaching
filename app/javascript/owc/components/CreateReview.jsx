@@ -5,9 +5,9 @@ import axios from 'axios-on-rails'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { addTip, changeTitle, changeSummary, loadReview } from '../actions/feed'
-import { changeTime } from '../actions/timestamp'
+import { seekToTimestamp } from '../actions/timestamp'
 
-const CreateReview = ({ post_id, summary, title, tips, dispatch, timestamp, post, user }) => (
+const CreateReview = ({ post_id, summary, title, tips, dispatch, timestamp, post, user, seekTo }) => (
 
   <div className='bg-dark rounded p-3'>
     <div className='row'>
@@ -15,9 +15,10 @@ const CreateReview = ({ post_id, summary, title, tips, dispatch, timestamp, post
         <VideoPlayer
           source={post.video_url}
           timestamp={timestamp}
+          seekTo={seekTo}
           />
-        <button className='btn btn-warning' onClick={(e) => { dispatch(addTip(5)) }}>
-          Add Tip
+        <button className='btn btn-warning' onClick={(e) => { dispatch(addTip(timestamp)) }}>
+          Add Tip @{ moment().startOf('day').seconds(timestamp).format('mm:ss') }
         </button>
         <Link
           role='button'
@@ -30,8 +31,17 @@ const CreateReview = ({ post_id, summary, title, tips, dispatch, timestamp, post
               summary,
               title
             })
-            .then(response => {
-              dispatch(loadReview({...response.data, reviewer_profile: user.profile}))
+            .then(reviewResponse => {
+              dispatch(loadReview({...reviewResponse.data, reviewer_profile: user.profile}))
+              console.log(reviewResponse.data)
+              // tips.forEach(tip => {
+              //   axios.post('/tips', {
+              //     review_id: reviewResponse.data.id,
+              //     timestamp: tip.timestamp,
+              //     comment: tip.comment,
+              //     tags: []
+              //   })
+              // })
             })
             .catch(error => console.log(error))
         }}>
@@ -64,7 +74,7 @@ const CreateReview = ({ post_id, summary, title, tips, dispatch, timestamp, post
               <a
                 className='text-warning'
                 style={{ cursor: 'pointer' }}
-                onClick={(e) => { dispatch(changeTime(tip.timestamp)) }}
+                onClick={(e) => { dispatch(seekToTimestamp(tip.timestamp)) }}
               >
                 { moment().startOf('day').seconds(tip.timestamp).format('mm:ss') }
               </a>
@@ -92,7 +102,8 @@ const mapStateToProps = (state) => {
     summary,
     title,
     tips,
-    timestamp: state.timestampReducer,
+    timestamp: state.timestampReducer.timestamp,
+    seekTo: state.timestampReducer.seekTo,
     post: state.feedReducer.selectedPost,
     user: state.feedReducer.user
   }
