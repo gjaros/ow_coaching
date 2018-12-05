@@ -4,9 +4,8 @@ import moment from 'moment'
 import VideoPlayer from './VideoPlayer'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { createReview } from '../actions/feed'
 
-const Modal = ({ id, profile_id, title, coachability, video_url, created_at, updated_at, poster_profile, reviews, timestamp, seekTo, user, dispatch }) => (
+const Modal = ({ id, profile_id, title, coachability, video_url, created_at, updated_at, poster_profile, reviews, currentTime, seekTo, user, dispatch }) => (
   <div id={'post-' + id} className='modal fade' aria-hidden='true' role='dialog' tabIndex='-1' data-backdrop='false'>
     <div className='modal-dialog modal-lg' role='document'>
         <div className='modal-content bg-secondary text-white'>
@@ -33,7 +32,7 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
             <div className='row'>
               <div className='col-xl-6 pr-3 sticky-top'>
                 <div className='mb-2 sticky-top'>
-                  <VideoPlayer source={video_url} timestamp={timestamp} seekTo={seekTo} />
+                  <VideoPlayer source={video_url} currentTime={currentTime} seekTo={seekTo} />
                 </div>
               </div>
               <div className='col-xl-6'>
@@ -42,9 +41,18 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
                   user.isLoggedIn() ?
                   <Link
                     role='button'
-                    to={'CreateReview'}
+                    to={{
+                      pathname: 'NewReview',
+                      state: {
+                        id: null,
+                        post_id: id,
+                        profile_id: user.profile.id,
+                        title: '',
+                        summary: '',
+                        tips: []
+                      }
+                    }}
                     className={'btn btn-primary btn-block mb-2' + (user.profile.sr > poster_profile.sr ? '' : ' disabled')}
-                    onClick={(e) => { dispatch(createReview()) }}
                     >
                       Write a Review
                   </Link> :
@@ -70,8 +78,8 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
 
 const mapStateToProps = (state) => {
   return {
-    timestamp: state.timestampReducer.timestamp,
-    seekTo: state.timestampReducer.seekTo,
+    currentTime: state.playerReducer.currentTime,
+    seekTo: state.playerReducer.seekTo,
     user: state.feedReducer.user
   }
 }

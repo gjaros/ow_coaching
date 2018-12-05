@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { seekTo } from '../actions/timestamp'
+import { seekTo } from '../actions/player'
 import { connect } from 'react-redux'
 
 const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (

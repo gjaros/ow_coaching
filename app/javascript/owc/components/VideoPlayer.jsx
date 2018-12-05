@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeTime } from '../actions/timestamp'
+import { changeTime } from '../actions/player'
 
 class VideoPlayer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       source: props.source,
-      timestamp: props.timestamp,
+      currentTime: props.currentTime,
       seekTo: 0
     }
     this.videoRef = React.createRef()
@@ -56,7 +56,7 @@ class VideoPlayer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    timestamp: state.timestampReducer
+    currentTime: state.playerReducer
   }
 }
 

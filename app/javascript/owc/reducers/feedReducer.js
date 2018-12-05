@@ -13,12 +13,6 @@ const initialState = {
   hasMoreItems: true,
   user,
   posts: [],
-  review: user.isLoggedIn() && {
-    profile_id: user.profile.id,
-    summary: '',
-    title: '',
-    tips: []
-  },
   selectedPost: {}
 }
 
@@ -41,65 +35,12 @@ export default (state = initialState, action) => {
     case 'CREATE_REVIEW':
       return {
         ...state,
-        review: {
-          ...state.review,
-          post_id: state.selectedPost.id
-        }
-      }
-      break
-    case 'CHANGE_REVIEW':
-      return {
-        ...state,
-        review: {
-          ...state.review,
-          id: action.review.id,
-          post_id: state.selectedPost.id,
-          summary: action.review.summary,
-          title: action.review.title,
-          tips: action.review.tips
-        }
-      }
-      break
-    case 'ADD_TIP':
-      return {
-        ...state,
-        review: {
-          ...state.review,
-          tips: state.review.tips.concat({
-            timestamp: action.timestamp,
-            comment: '',
-            tags: []
-          })
-        }
-      }
-      break
-    case 'CHANGE_TITLE':
-      return {
-        ...state,
-        review: {
-          ...state.review,
-          title: action.title
-        }
-      }
-      break
-    case 'CHANGE_SUMMARY':
-      return {
-        ...state,
-        review: {
-          ...state.review,
-          summary: action.summary
-        }
-      }
-      break
-    case 'LOAD_REVIEW':
-      return {
-        ...state,
         posts: state.posts.map(post => post.id === action.review.post_id ?
           { ...post, reviews: post.reviews.concat(action.review) } : { ...post }
         )
       }
       break
-    case 'EDIT_REVIEW':
+    case 'UPDATE_REVIEW':
       return {
         ...state,
         posts: state.posts.map(post => post.id === action.review.post_id ?
@@ -107,7 +48,7 @@ export default (state = initialState, action) => {
         )
       }
       break
-    case 'DELETE_REVIEW':
+    case 'DESTROY_REVIEW':
       return {
         ...state,
         posts: state.posts.map(post => post.id === action.review.post_id ?

@@ -49,12 +49,7 @@ const Feed = ({ hasMoreItems, page, user, posts, dispatch }) => (
 
 const mapStateToProps = (state) => {
   const { hasMoreItems, page, user, posts } = state.feedReducer
-  return {
-    hasMoreItems,
-    page,
-    user,
-    posts
-  }
+  return { hasMoreItems, page, user, posts }
 }
 
 export default connect(mapStateToProps)(Feed)

@@ -1,5 +1,5 @@
 const initialState = {
-  timestamp: 0,
+  currentTime: 0,
   seekTo: 0
 }
 
@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     case 'CHANGE_TIME':
       return {
         ...state,
-        timestamp: Math.floor(action.newTime)
+        currentTime: Math.floor(action.newTime)
       }
       break;
     case 'SEEK_TO_TIMESTAMP':

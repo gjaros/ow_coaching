@@ -4,25 +4,35 @@ import VideoPlayer from './VideoPlayer'
 import axios from 'axios-on-rails'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { updateReview } from '../actions/feed'
+import { createReview } from '../actions/feed'
 import { seekToTimestamp } from '../actions/player'
 
-class EditReview extends React.Component {
+class NewReview extends React.Component {
   constructor(props) {
     super(props)
     this.state = {...props.location.state}
   }
 
   handleTitleOnChange = (e) => {
-    this.setState({ title: e.target.value })
+    this.setState({
+      title: e.target.value
+    })
   }
 
   handleSummaryOnChange = (e) => {
-    this.setState({ summary: e.target.value })
+    this.setState({
+      summary: e.target.value
+    })
   }
 
   addTip = (timestamp) => {
-
+    this.setState((prevState) => ({
+      tips: prevState.tips.concat({
+        timestamp,
+        comment: '',
+        tags: []
+      })
+    }))
   }
 
   render() {
@@ -36,7 +46,7 @@ class EditReview extends React.Component {
               currentTime={currentTime}
               seekTo={seekTo}
               />
-            <button className='btn btn-warning' onClick={this.addTip(currentTime)}>
+            <button className='btn btn-warning' onClick={(currentTime) => { this.addTip(currentTime) }}>
               Add Tip @{ moment().startOf('day').seconds(currentTime).format('mm:ss') }
             </button>
             <Link
@@ -44,15 +54,14 @@ class EditReview extends React.Component {
               to='/'
               className='btn btn-outline-warning btn-block'
               onClick={(e) => {
-                axios.patch('/reviews', {
-                  id: this.state.id,
+                axios.post('/reviews', {
                   post_id: this.state.post_id,
                   profile_id: this.state.profile_id,
                   summary: this.state.summary,
                   title: this.state.title
                 })
                 .then(reviewResponse => {
-                  dispatch(updateReview({...reviewResponse.data, reviewer_profile: user.profile}))
+                  dispatch(createReview({...reviewResponse.data, reviewer_profile: user.profile}))
                   console.log(reviewResponse.data)
                   // tips.forEach(tip => {
                   //   axios.post('/tips', {
@@ -65,7 +74,7 @@ class EditReview extends React.Component {
                 })
                 .catch(error => console.log(error))
               }}>
-              Save
+              Submit
             </Link>
           </div>
           <div className='col-xl-6'>
@@ -105,6 +114,7 @@ class EditReview extends React.Component {
                     onChange={(e) => {}}
                     rows='3'
                     placeholder='a brief tip...'
+                    value={tip.comment}
                   />
                 </div>
               ))
@@ -126,4 +136,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(EditReview)
+export default connect(mapStateToProps)(NewReview)

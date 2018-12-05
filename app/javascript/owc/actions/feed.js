@@ -8,41 +8,17 @@ export const selectPost = (post) => ({
   post
 })
 
-export const createReview = () => ({
-  type: 'CREATE_REVIEW'
-})
-
-export const changeReview = (review) => ({
-  type: 'CHANGE_REVIEW',
-  review
-})
-
-export const addTip = (timestamp) => ({
-  type: 'ADD_TIP',
-  timestamp
-})
-
-export const changeTitle = (title) => ({
-  type: 'CHANGE_TITLE',
-  title
-})
-
-export const changeSummary = (summary) => ({
-  type: 'CHANGE_SUMMARY',
-  summary
-})
-
 export const loadReview = (review) => ({
-  type: 'LOAD_REVIEW',
+  type: 'CREATE_REVIEW',
   review
 })
 
 export const editReview = (review) => ({
-  type: 'EDIT_REVIEW',
+  type: 'UPDATE_REVIEW',
   review
 })
 
 export const deleteReview = (review) => ({
-  type: 'DELETE_REVIEW',
+  type: 'DESTROY_REVIEW',
   review
 })
