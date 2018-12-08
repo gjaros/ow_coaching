@@ -1,4 +1,4 @@
-const getRank = (sr) => {
+export const getRank = (sr) => {
   switch (true) {
     case (sr < 1500):
       return 1
@@ -26,4 +26,6 @@ const getRank = (sr) => {
   }
 }
 
-export { getRank }
+export const byTimestamp = (a, b) => {
+  return (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0) 
+}

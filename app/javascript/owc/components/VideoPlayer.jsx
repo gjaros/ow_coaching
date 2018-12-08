@@ -49,15 +49,13 @@ class VideoPlayer extends React.Component {
           </video>
         </div>
       </div>
-
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    currentTime: state.playerReducer
-  }
+  const { currentTime, seekTo } = state.playerReducer
+  return { currentTime, seekTo }
 }
 
 export default connect(mapStateToProps)(VideoPlayer)

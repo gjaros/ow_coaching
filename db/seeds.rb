@@ -95,6 +95,9 @@ end
 user = User.create!(email: 'jarosgregory@gmail.com', password: 'password', password_confirmation: 'password')
 Profile.create(user_id: user.id, platform: 1, region: 0, tag: 'GamingBotanist', sr: 2551, reputation: 100, roles: ['support'])
 
-# higher rank user
+# higher and lower rank user
 user = User.create!(email: 'higher@example.com', password: 'password', password_confirmation: 'password')
 Profile.create(user_id: user.id, platform: 1, region: 0, tag: 'higher', sr: 4500, reputation: 50, roles: ['support'])
+
+user = User.create!(email: 'lower@example.com', password: 'password', password_confirmation: 'password')
+Profile.create(user_id: user.id, platform: 2, region: 0, tag: 'lower', sr: 500, reputation: 50, roles: ['tank'])

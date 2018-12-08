@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { createReview } from '../actions/feed'
 import { seekToTimestamp } from '../actions/player'
+import { byTimestamp } from '../constants/helpers'
 
 class NewReview extends React.Component {
   constructor(props) {
@@ -26,12 +27,22 @@ class NewReview extends React.Component {
   }
 
   addTip = (timestamp) => {
+    // checks to see if a tip already exists with the passed timestamp.
+    !this.state.tips.map(tip => tip.timestamp).includes(timestamp) && (
+      // concats new tip to tips array.
+      this.setState((prevState) => ({
+        tips: prevState.tips.concat({
+          timestamp,
+          comment: '',
+          tags: []
+        })
+      }))
+    )
+  }
+
+  deleteTip = (timestamp) => {
     this.setState((prevState) => ({
-      tips: prevState.tips.concat({
-        timestamp,
-        comment: '',
-        tags: []
-      })
+      tips: prevState.tips.filter(tip => tip.timestamp !== timestamp)
     }))
   }
 
@@ -46,7 +57,7 @@ class NewReview extends React.Component {
               currentTime={currentTime}
               seekTo={seekTo}
               />
-            <button className='btn btn-warning' onClick={(currentTime) => { this.addTip(currentTime) }}>
+            <button className='btn btn-warning' onClick={(e) => this.addTip(currentTime)}>
               Add Tip @{ moment().startOf('day').seconds(currentTime).format('mm:ss') }
             </button>
             <Link
@@ -61,7 +72,7 @@ class NewReview extends React.Component {
                   title: this.state.title
                 })
                 .then(reviewResponse => {
-                  dispatch(createReview({...reviewResponse.data, reviewer_profile: user.profile}))
+                  this.props.dispatch(createReview({...reviewResponse.data, reviewer_profile: user.profile}))
                   console.log(reviewResponse.data)
                   // tips.forEach(tip => {
                   //   axios.post('/tips', {
@@ -98,15 +109,21 @@ class NewReview extends React.Component {
             <p className='text-white text-center'>Add a tip by clicking the add timestamp button!</p>
             {
               this.state.tips &&
-              this.state.tips.map((tip, index) => (
+              this.state.tips.sort((a, b) => byTimestamp(a, b)).map((tip, index) => (
                 <div key={index}>
                   <a
                     className='text-warning'
                     style={{ cursor: 'pointer' }}
-                    onClick={(e) => { dispatch(seekToTimestamp(tip.timestamp)) }}
+                    onClick={(e) => { this.props.dispatch(seekToTimestamp(tip.timestamp)) }}
                   >
                     { moment().startOf('day').seconds(tip.timestamp).format('mm:ss') }
                   </a>
+                  <button
+                    className='btn btn-danger btn-sm'
+                    onClick={(e) => this.deleteTip(tip.timestamp)}
+                    >
+                    <span>×</span>
+                  </button>
                   <textarea
                     id={'comment-' + index}
                     className='form-control my-2'
