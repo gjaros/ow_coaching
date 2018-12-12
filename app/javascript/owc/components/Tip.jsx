@@ -21,7 +21,7 @@ const Tip = ({ timestamp, comment, helpfulness, tags, dispatch }) => (
         <a
           key={index}
           href='#'
-          className='badge badge-pull badge-light text-dark mr-1 mb-2'
+          className='badge badge-pill badge-light text-dark mr-1 mb-2'
           >
           { tag }
         </a>

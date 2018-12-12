@@ -2,7 +2,7 @@ import React from 'react'
 import Tip from './Tip'
 import moment from 'moment'
 import axios from 'axios-on-rails'
-import { destroyReview } from '../actions/feed'
+import { deleteReview } from '../actions/feed'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -37,12 +37,9 @@ const Review = ({ id, post_id, rating, title, summary, created_at, reviewer_prof
             role='button'
             onClick={e => {
               axios.delete('/reviews/' + id)
-              .then(response => {
-                dispatch(destroyReview({ id, post_id }))
-              })
+              .then(response => dispatch(deleteReview({ id, post_id })))
               .catch(error => console.log(error))
-              }}
-            >
+            }}>
             Delete
           </a>
         </span>

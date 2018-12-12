@@ -7,8 +7,7 @@ class VideoPlayer extends React.Component {
     super(props)
     this.state = {
       source: props.source,
-      currentTime: props.currentTime,
-      seekTo: 0
+      seekTo: props.seekTo
     }
     this.videoRef = React.createRef()
   }
@@ -17,6 +16,7 @@ class VideoPlayer extends React.Component {
     this.videoRef.current.ontimeupdate = () => { this.onCurrentTimeChange() }
   }
 
+  //This can't work long-term
   componentDidUpdate(prevProps) {
     if (this.props.seekTo !== prevProps.seekTo) {
       this.setState(
@@ -32,6 +32,7 @@ class VideoPlayer extends React.Component {
 
   seek = () => {
     this.videoRef.current.currentTime = this.state.seekTo
+    this.setState({ seekTo: 0 })
   }
 
   render() {

@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     case 'CHANGE_TIME':
       return {
         ...state,
-        currentTime: Math.floor(action.newTime)
+        currentTime: action.newTime.toFixed(1)
       }
       break;
     case 'SEEK_TO_TIMESTAMP':

@@ -8,7 +8,7 @@ export const selectPost = (post) => ({
   post
 })
 
-export const loadReview = (review) => ({
+export const newReview = (review) => ({
   type: 'CREATE_REVIEW',
   review
 })

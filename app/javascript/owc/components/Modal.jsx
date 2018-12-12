@@ -32,7 +32,7 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
             <div className='row'>
               <div className='col-xl-6 pr-3 sticky-top'>
                 <div className='mb-2 sticky-top'>
-                  <VideoPlayer source={video_url} currentTime={currentTime} seekTo={seekTo} />
+                  <VideoPlayer source={video_url} seekTo={seekTo} />
                 </div>
               </div>
               <div className='col-xl-6'>

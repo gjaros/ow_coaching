@@ -52,11 +52,7 @@ class EditReview extends React.Component {
       <div className='bg-dark rounded p-3'>
         <div className='row'>
           <div className='col-xl-6'>
-            <VideoPlayer
-              source={video_url}
-              currentTime={currentTime}
-              seekTo={seekTo}
-              />
+            <VideoPlayer source={video_url} seekTo={seekTo} />
             <button className='btn btn-warning' onClick={(e) => this.addTip(currentTime)}>
               Add Tip @{ moment().startOf('day').seconds(currentTime).format('mm:ss') }
             </button>
