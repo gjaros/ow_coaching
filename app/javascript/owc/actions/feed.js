@@ -13,6 +13,11 @@ export const newReview = (review) => ({
   review
 })
 
+export const postReview = (payload) => ({
+  type: 'POST_REVIEW',
+  payload
+})
+
 export const editReview = (review) => ({
   type: 'UPDATE_REVIEW',
   review

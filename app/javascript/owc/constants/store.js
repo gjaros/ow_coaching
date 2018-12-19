@@ -1,7 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import feedReducer from '../reducers/feedReducer'
 import playerReducer from '../reducers/playerReducer'
+import feedSaga from '../sagas/feedSaga'
 
 const ow_coach = combineReducers({
   feedReducer,
@@ -9,9 +10,12 @@ const ow_coach = combineReducers({
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const sagaMiddleware = createSagaMiddleware()
 
 export default createStore(
   ow_coach, composeEnhancers(
-    applyMiddleware(thunk)
+    applyMiddleware(sagaMiddleware)
   )
 )
+
+sagaMiddleware.run(feedSaga)

@@ -28,11 +28,11 @@ class TipsController < ApplicationController
 
     respond_to do |format|
       if @tip.save
-        format.html { redirect_to @tip, notice: 'Tip was successfully created.' }
-        format.json { render :show, status: :created, location: @tip }
+        render :json => @tip
+        format.html
       else
-        format.html { render :new }
-        format.json { render json: @tip.errors, status: :unprocessable_entity }
+        render :json => @tip.errors
+        format.html
       end
     end
   end

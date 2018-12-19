@@ -4,7 +4,7 @@ import VideoPlayer from './VideoPlayer'
 import axios from 'axios-on-rails'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { newReview } from '../actions/feed'
+import { newReview, postReview } from '../actions/feed'
 import { seekToTimestamp } from '../actions/player'
 import { byTimestamp } from '../constants/helpers'
 
@@ -80,37 +80,46 @@ class NewReview extends React.Component {
               role='button'
               to='/'
               className='btn btn-outline-warning btn-block'
-              onClick={e => {
-                let recievedReview = {}
-                let recievedTips = []
-                axios.post('/reviews', {
-                  post_id: this.state.post_id,
-                  profile_id: this.state.profile_id,
-                  summary: this.state.summary,
-                  title: this.state.title
-                })
-                .then(reviewResponse => {
-                  console.log(reviewResponse.data)
-                  recievedReview = reviewResponse.data
-                  this.state.tips && (
-                    this.state.tips.forEach(tip => {
-                      axios.post('/tips', {
-                        review_id: reviewResponse.data.id,
-                        timestamp: tip.timestamp,
-                        comment: tip.comment,
-                        tags: tip.tags
-                      })
-                      .then(tipResponse => {
-                        console.log(tipResponse.data)
-                        recievedTips.concat(tipResponse.data)
-                      })
-                      .catch(reviewError => console.log(reviewError))
-                    })
-                  )
-                })
-                .catch(tipError => console.log(tipError))
-
-                this.props.dispatch(newReview({...recievedReview, tips: recievedTips, reviewer_profile: user.profile}))
+              onClick={ e => {
+                this.props.dispatch(postReview({
+                  review: {
+                    post_id: this.state.post_id,
+                    profile_id: this.state.profile_id,
+                    summary: this.state.summary,
+                    title: this.state.title
+                  },
+                  tips: this.state.tips
+                }))
+                // let recievedReview = {}
+                // let recievedTips = []
+                // axios.post('/reviews', {
+                //   post_id: this.state.post_id,
+                //   profile_id: this.state.profile_id,
+                //   summary: this.state.summary,
+                //   title: this.state.title
+                // })
+                // .then(reviewResponse => {
+                //   console.log(reviewResponse.data)
+                //   recievedReview = reviewResponse.data
+                //   this.state.tips && (
+                //     this.state.tips.forEach(tip => {
+                //       axios.post('/tips', {
+                //         review_id: reviewResponse.data.id,
+                //         timestamp: tip.timestamp,
+                //         comment: tip.comment,
+                //         tags: tip.tags
+                //       })
+                //       .then(tipResponse => {
+                //         console.log(tipResponse.data)
+                //         recievedTips.concat(tipResponse.data)
+                //       })
+                //       .catch(reviewError => console.log(reviewError))
+                //     })
+                //   )
+                // })
+                // .catch(tipError => console.log(tipError))
+                //
+                // this.props.dispatch(newReview({...recievedReview, tips: recievedTips, reviewer_profile: user.profile}))
               }}>
               Submit
             </Link>
