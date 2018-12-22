@@ -90,36 +90,6 @@ class NewReview extends React.Component {
                   },
                   tips: this.state.tips
                 }))
-                // let recievedReview = {}
-                // let recievedTips = []
-                // axios.post('/reviews', {
-                //   post_id: this.state.post_id,
-                //   profile_id: this.state.profile_id,
-                //   summary: this.state.summary,
-                //   title: this.state.title
-                // })
-                // .then(reviewResponse => {
-                //   console.log(reviewResponse.data)
-                //   recievedReview = reviewResponse.data
-                //   this.state.tips && (
-                //     this.state.tips.forEach(tip => {
-                //       axios.post('/tips', {
-                //         review_id: reviewResponse.data.id,
-                //         timestamp: tip.timestamp,
-                //         comment: tip.comment,
-                //         tags: tip.tags
-                //       })
-                //       .then(tipResponse => {
-                //         console.log(tipResponse.data)
-                //         recievedTips.concat(tipResponse.data)
-                //       })
-                //       .catch(reviewError => console.log(reviewError))
-                //     })
-                //   )
-                // })
-                // .catch(tipError => console.log(tipError))
-                //
-                // this.props.dispatch(newReview({...recievedReview, tips: recievedTips, reviewer_profile: user.profile}))
               }}>
               Submit
             </Link>
@@ -146,7 +116,7 @@ class NewReview extends React.Component {
             {
               this.state.tips &&
               this.state.tips.sort((a, b) => byTimestamp(a, b)).map((tip, index) => (
-                <div key={index}>
+                <div key={index} className='my-2'>
                   <a
                     className='text-warning'
                     style={{ cursor: 'pointer' }}

@@ -42,11 +42,11 @@ class TipsController < ApplicationController
   def update
     respond_to do |format|
       if @tip.update(tip_params)
-        format.html { redirect_to @tip, notice: 'Tip was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tip }
+        render :json => @tip
+        format.html
       else
-        format.html { render :edit }
-        format.json { render json: @tip.errors, status: :unprocessable_entity }
+        render :json => @tip.errors
+        format.html
       end
     end
   end
@@ -56,8 +56,8 @@ class TipsController < ApplicationController
   def destroy
     @tip.destroy
     respond_to do |format|
-      format.html { redirect_to tips_url, notice: 'Tip was successfully destroyed.' }
-      format.json { head :no_content }
+      render :json => 'Tip was successfully destroyed.'
+      format.html
     end
   end
 

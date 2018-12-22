@@ -4,7 +4,7 @@ import VideoPlayer from './VideoPlayer'
 import axios from 'axios-on-rails'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { updateReview } from '../actions/feed'
+import { editReview, patchReview } from '../actions/feed'
 import { seekToTimestamp } from '../actions/player'
 import { byTimestamp } from '../constants/helpers'
 
@@ -46,8 +46,28 @@ class EditReview extends React.Component {
     }))
   }
 
+  handleCommentOnChange = (e, timestamp) => {
+    e.persist()
+
+    this.setState((prevState) => ({
+      tips: prevState.tips.map(tip => tip.timestamp === timestamp ? { ...tip, comment: e.target.value } : { ...tip })
+    }))
+  }
+
+  addTag = (tagToAdd, timestamp) => {
+    this.setState((prevState) => ({
+      tips: prevState.tips.map(tip => tip.timestamp === timestamp ? { ...tip, tags: tip.tags.concat(tagToAdd) } : { ...tip })
+    }))
+  }
+
+  deleteTag = (tagToRemove, timestamp) => {
+    this.setState((prevState) => ({
+      tips: prevState.tips.map(tip => tip.timestamp === timestamp ? { ...tip, tags: tip.tags.filter(tag => tag !== tagToRemove) } : { ...tip })
+    }))
+  }
+
   render() {
-    const { currentTime, seekTo, video_url } = this.props
+    const { user, video_url, currentTime, seekTo } = this.props
     return (
       <div className='bg-dark rounded p-3'>
         <div className='row'>
@@ -60,27 +80,17 @@ class EditReview extends React.Component {
               role='button'
               to='/'
               className='btn btn-outline-warning btn-block'
-              onClick={(e) => {
-                axios.patch('/reviews', {
-                  id: this.state.id,
-                  post_id: this.state.post_id,
-                  profile_id: this.state.profile_id,
-                  summary: this.state.summary,
-                  title: this.state.title
-                })
-                .then(reviewResponse => {
-                  this.props.dispatch(updateReview({...reviewResponse.data, reviewer_profile: user.profile}))
-                  console.log(reviewResponse.data)
-                  // tips.forEach(tip => {
-                  //   axios.post('/tips', {
-                  //     review_id: reviewResponse.data.id,
-                  //     timestamp: tip.timestamp,
-                  //     comment: tip.comment,
-                  //     tags: []
-                  //   })
-                  // })
-                })
-                .catch(error => console.log(error))
+              onClick={ e => {
+                this.props.dispatch(patchReview({
+                  review: {
+                    id: this.state.id,
+                    post_id: this.state.post_id,
+                    profile_id: this.state.profile_id,
+                    summary: this.state.summary,
+                    title: this.state.title
+                  },
+                  tips: this.state.tips
+                }))
               }}>
               Save
             </Link>
@@ -107,16 +117,16 @@ class EditReview extends React.Component {
             {
               this.state.tips &&
               this.state.tips.sort((a, b) => byTimestamp(a, b)).map((tip, index) => (
-                <div key={index}>
+                <div key={index} className='my-2'>
                   <a
                     className='text-warning'
                     style={{ cursor: 'pointer' }}
                     onClick={(e) => { this.props.dispatch(seekToTimestamp(tip.timestamp)) }}
-                  >
+                    >
                     { moment().startOf('day').seconds(tip.timestamp).format('mm:ss') }
                   </a>
                   <button
-                    className='btn btn-danger btn-sm'
+                    className='btn btn-danger btn-sm ml-3'
                     onClick={(e) => this.deleteTip(tip.timestamp)}
                     >
                     <span>×</span>
@@ -125,11 +135,42 @@ class EditReview extends React.Component {
                     id={'comment-' + index}
                     className='form-control my-2'
                     type='text'
-                    onChange={(e) => {}}
+                    onChange={(e) => this.handleCommentOnChange(e, tip.timestamp)}
                     rows='3'
                     placeholder='a brief tip...'
                     value={tip.comment}
-                  />
+                    />
+                  <div className='d-flex flex-wrap'>
+                    <div className='input-group input-group-sm'>
+                      <input
+                        id={'tip-' + index}
+                        className='form-control'
+                        type='text'
+                        placeholder='tag'
+                        />
+                      <div className='input-group-append'>
+                        <button
+                          className='btn btn-outline-light'
+                          onClick={(e) => this.addTag(document.getElementById('tip-' + index).value, tip.timestamp)}
+                          >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    {
+                      tip.tags &&
+                      tip.tags.map((tag, index) => (
+                        <a
+                          key={index}
+                          className='badge badge-pill badge-light text-dark mr-1 mt-2'
+                          style={{ cursor: 'pointer' }}
+                          onClick={(e) => this.deleteTag(tag, tip.timestamp)}
+                          >
+                          { tag }
+                        </a>
+                      ))
+                    }
+                  </div>
                 </div>
               ))
             }
@@ -144,6 +185,7 @@ const mapStateToProps = (state) => {
   const { currentTime, seekTo } = state.playerReducer
 
   return {
+    user: state.feedReducer.user,
     video_url: state.feedReducer.selectedPost.video_url,
     currentTime,
     seekTo
