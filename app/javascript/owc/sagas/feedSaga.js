@@ -4,15 +4,15 @@ import { newReview, editReview } from '../actions/feed'
 import regeneratorRuntime from 'regenerator-runtime'
 
 //POSTs each tip to the server and returns an array with the tips with their new ids.
-function *postTips(tips) {
-  return yield tips.map(tip => axios.post('/tips', tip).then(response => response.data).catch(error => error))
+function *postTips(tips, review_id) {
+  return yield tips.map(tip => axios.post('/tips', { ...tip, review_id }).then(response => response.data).catch(error => error))
 }
 
 function *postReview(action) {
   try {
     const review = yield axios.post('/reviews', action.payload.review).then(response => response.data)
-    //postTips is passed a mapped copy of the tips that adds the review_id parameter needed before being POST to the server.
-    const tips = yield postTips(action.payload.tips.map(tip => ({...tip, review_id: review.id})))
+    
+    const tips = yield postTips(action.payload.tips, review.id)
 
     const reviewer_profile = yield select(state => state.feedReducer.user.profile)
 
@@ -31,9 +31,13 @@ function *patchReview(action) {
   try {
     const review = yield axios.patch('/reviews/' + action.payload.review.id, action.payload.review).then(response => response.data).catch(error => error)
 
-    const tips = yield patchTips(action.payload.tips)
+    const patchedTips = yield patchTips(action.payload.tips.filter(tip => tip.hasOwnProperty('id')))
+    const postedTips = yield postTips(action.payload.tips.filter(tip => !tip.hasOwnProperty('id')), review.id)
+    const tips = [...patchedTips, ...postedTips]
 
     const reviewer_profile = yield select(state => state.feedReducer.user.profile)
+
+    // console.log({ ...review, tips, reviewer_profile })
 
     yield put(editReview({ ...review, tips, reviewer_profile }))
 

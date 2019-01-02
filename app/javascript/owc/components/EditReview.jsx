@@ -14,13 +14,13 @@ class EditReview extends React.Component {
     this.state = {...props.location.state}
   }
 
-  handleTitleOnChange = (e) => {
+  handleTitleOnChange = e => {
     this.setState({
       title: e.target.value
     })
   }
 
-  handleSummaryOnChange = (e) => {
+  handleSummaryOnChange = e => {
     this.setState({
       summary: e.target.value
     })
@@ -73,7 +73,7 @@ class EditReview extends React.Component {
         <div className='row'>
           <div className='col-xl-6'>
             <VideoPlayer source={video_url} seekTo={seekTo} />
-            <button className='btn btn-warning' onClick={(e) => this.addTip(currentTime)}>
+            <button className='btn btn-warning' onClick={e => this.addTip(currentTime)}>
               Add Tip @{ moment().startOf('day').seconds(currentTime).format('mm:ss') }
             </button>
             <Link
@@ -121,13 +121,16 @@ class EditReview extends React.Component {
                   <a
                     className='text-warning'
                     style={{ cursor: 'pointer' }}
-                    onClick={(e) => { this.props.dispatch(seekToTimestamp(tip.timestamp)) }}
+                    onClick={e => { this.props.dispatch(seekToTimestamp(tip.timestamp)) }}
                     >
                     { moment().startOf('day').seconds(tip.timestamp).format('mm:ss') }
                   </a>
                   <button
                     className='btn btn-danger btn-sm ml-3'
-                    onClick={(e) => this.deleteTip(tip.timestamp)}
+                    onClick={(e) => {
+                      tip.hasOwnProperty('id') && axios.delete('/tips/' + tip.id).then(response => response.data).catch(error => error)
+                      this.deleteTip(tip.timestamp)
+                    }}
                     >
                     <span>×</span>
                   </button>
@@ -135,7 +138,7 @@ class EditReview extends React.Component {
                     id={'comment-' + index}
                     className='form-control my-2'
                     type='text'
-                    onChange={(e) => this.handleCommentOnChange(e, tip.timestamp)}
+                    onChange={e => this.handleCommentOnChange(e, tip.timestamp)}
                     rows='3'
                     placeholder='a brief tip...'
                     value={tip.comment}
@@ -151,7 +154,7 @@ class EditReview extends React.Component {
                       <div className='input-group-append'>
                         <button
                           className='btn btn-outline-light'
-                          onClick={(e) => this.addTag(document.getElementById('tip-' + index).value, tip.timestamp)}
+                          onClick={e => this.addTag(document.getElementById('tip-' + index).value, tip.timestamp)}
                           >
                           +
                         </button>
@@ -164,7 +167,7 @@ class EditReview extends React.Component {
                           key={index}
                           className='badge badge-pill badge-light text-dark mr-1 mt-2'
                           style={{ cursor: 'pointer' }}
-                          onClick={(e) => this.deleteTag(tag, tip.timestamp)}
+                          onClick={e => this.deleteTag(tag, tip.timestamp)}
                           >
                           { tag }
                         </a>
