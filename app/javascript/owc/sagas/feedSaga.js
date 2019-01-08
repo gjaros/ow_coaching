@@ -3,7 +3,6 @@ import axios from 'axios-on-rails'
 import { newReview, editReview } from '../actions/feed'
 import regeneratorRuntime from 'regenerator-runtime'
 
-//POSTs each tip to the server and returns an array with the tips with their new ids.
 function *postTips(tips, review_id) {
   return yield tips.map(tip => axios.post('/tips', { ...tip, review_id }).then(response => response.data).catch(error => error))
 }
@@ -11,7 +10,7 @@ function *postTips(tips, review_id) {
 function *postReview(action) {
   try {
     const review = yield axios.post('/reviews', action.payload.review).then(response => response.data)
-    
+
     const tips = yield postTips(action.payload.tips, review.id)
 
     const reviewer_profile = yield select(state => state.feedReducer.user.profile)
@@ -36,8 +35,6 @@ function *patchReview(action) {
     const tips = [...patchedTips, ...postedTips]
 
     const reviewer_profile = yield select(state => state.feedReducer.user.profile)
-
-    // console.log({ ...review, tips, reviewer_profile })
 
     yield put(editReview({ ...review, tips, reviewer_profile }))
 

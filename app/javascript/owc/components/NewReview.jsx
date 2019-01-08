@@ -73,13 +73,13 @@ class NewReview extends React.Component {
         <div className='row'>
           <div className='col-xl-6'>
             <VideoPlayer source={video_url} seekTo={seekTo} />
-            <button className='btn btn-warning' onClick={e => this.addTip(currentTime)}>
+            <button className='btn btn-warning btn-block mb-3' onClick={e => this.addTip(currentTime)}>
               Add Tip @{ moment().startOf('day').seconds(currentTime).format('mm:ss') }
             </button>
             <Link
               role='button'
               to='/'
-              className='btn btn-outline-warning btn-block'
+              className='btn btn-outline-primary btn-block'
               onClick={ e => {
                 this.props.dispatch(postReview({
                   review: {

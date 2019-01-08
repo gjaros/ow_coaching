@@ -18,6 +18,7 @@ const Review = ({ id, post_id, rating, title, summary, created_at, reviewer_prof
           <Link
             className='btn btn-warning btn-sm'
             role='button'
+            onClick={() => document.body.setAttribute('class', 'modal-close')}
             to={{
               pathname: 'editReview',
               state: {

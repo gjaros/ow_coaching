@@ -41,6 +41,7 @@ const Modal = ({ id, profile_id, title, coachability, video_url, created_at, upd
                   user.isLoggedIn() ?
                   <Link
                     role='button'
+                    onClick={() => document.body.setAttribute('class', 'modal-close')}
                     to={{
                       pathname: 'NewReview',
                       state: {
